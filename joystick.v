@@ -19,6 +19,12 @@ fn C.glfwSetJoystickUserPointer(jid int, pointer voidptr)
 
 fn C.glfwGetJoystickUserPointer(jid int) voidptr
 
+fn C.glfwGetGamepadName(jid int) charptr
+
+fn C.glfwGetGamepadState(jid int, state &C.GLFWgamepadstate) int
+
+fn C.vglfwGetGamepadState(jid int, buttons byteptr, axes voidptr) int
+
 // Wrapper for the joystick ID
 pub struct Joystick {
 pub:
@@ -87,4 +93,15 @@ pub fn (j &Joystick) set_user_pointer(pointer voidptr) {
 // Get joystick user pointer
 pub fn (j &Joystick) get_user_pointer() voidptr {
 	return C.glfwGetJoystickUserPointer(j.id)
+}
+
+// Get gamepad name
+pub fn (j &Joystick) get_gamepad_name() string {
+	return tos3(C.glfwGetGamepadName(j.id))
+}
+
+// Get gamepad state
+pub fn (j &Joystick) get_gamepad_state(buttons [15]byte, axes [6]f32) int {
+	ok := C.vglfwGetGamepadState(j.id, &buttons, &axes)
+	return ok
 }
