@@ -130,14 +130,6 @@ pub mut:
 	title string
 }
 
-// Window definition
-pub struct WindowDef {
-pub mut:
-	pos          Position
-	size         Size
-	refresh_rate int
-}
-
 // Create window from raw data
 pub fn create_window(data voidptr) &Window {
 	return &Window{
@@ -300,15 +292,15 @@ pub fn (w &Window) get_monitor() &Monitor {
 }
 
 // Set window monitor
-pub fn (w &Window) set_monitor(monitor &Monitor, def WindowDef) {
+pub fn (w &Window) set_monitor(monitor &Monitor, desc MonitorDesc) {
 	mut monitor_data := voidptr(0)
 	//
 	if monitor != &Monitor(0) {
 		monitor_data = monitor.data
 	}
 	//
-	C.glfwSetWindowMonitor(w.data, monitor_data, def.pos.x, def.pos.y, def.size.width, def.size.height,
-		def.refresh_rate)
+	C.glfwSetWindowMonitor(w.data, monitor_data, desc.pos.x, desc.pos.y, desc.size.width, desc.size.height,
+		desc.refresh_rate)
 }
 
 // Get window attribute

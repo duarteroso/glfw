@@ -31,6 +31,14 @@ mut:
 	data &C.GLFWmonitor = &C.GLFWmonitor(0)
 }
 
+// Monitor descinition
+pub struct MonitorDesc {
+pub mut:
+	pos          Position
+	size         Size
+	refresh_rate int
+}
+
 // Create monitor from raw pointer
 pub fn create_monitor(data voidptr) &Monitor {
 	return &Monitor{
