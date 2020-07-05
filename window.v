@@ -141,7 +141,7 @@ pub fn create_window(data voidptr) &Window {
 pub fn create_window_desc(desc WindowDesc, monitor &Monitor, share &Window) &Window {
 	mut monitor_data := &C.GLFWmonitor(0)
 	// Has monitor data
-	if isnil(monitor) {
+	if !isnil(monitor) {
 		monitor_data = monitor.data
 	}
 	mut window_data := &C.GLFWwindow(0)
