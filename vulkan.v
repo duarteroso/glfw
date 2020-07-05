@@ -16,16 +16,22 @@ mut:
 
 // Get Vulkan instance proc address
 pub fn (v &Vulkan) get_instance_proc_address(proc_name string) FnVkProc {
-	return C.glfwGetInstanceProcAddress(v.data, proc_name.str)
+	adr := C.glfwGetInstanceProcAddress(v.data, proc_name.str)
+	check_error()
+	return adr
 }
 
 // Get physical device presentation support
 pub fn (v &Vulkan) get_physical_device_presentation_support(device C.VkPhysicalDevice, queue_family u32) int {
-	return C.glfwGetPhysicalDevicePresentationSupport(*v.data, device, queue_family)
+	b := C.glfwGetPhysicalDevicePresentationSupport(*v.data, device, queue_family)
+	check_error()
+	return b
 }
 
 // Create Vulkan wndow surface
 pub fn (v &Vulkan) create_window_surface(window &Window, allocator &C.VkAllocationCallbacks, surface &C.VkSurfaceKHR) C.VkResult {
-	return C.glfwCreateWindowSurface(*v.data, window.data, allocator, surface)
+	r := C.glfwCreateWindowSurface(*v.data, window.data, allocator, surface)
+	check_error()
+	return r
 }
 */

@@ -55,6 +55,7 @@ pub fn (mut m Monitor) set_data(data voidptr) {
 pub fn (m &Monitor) get_pos() Position {
 	pos := Position{}
 	C.glfwGetMonitorPos(m.data, &pos.x, &pos.y)
+	check_error()
 	return pos
 }
 
@@ -63,6 +64,7 @@ pub fn (m &Monitor) get_workarea() (Position, Size) {
 	pos := Position{}
 	size := Size{}
 	C.glfwGetMonitorWorkarea(m.data, &pos.x, &pos.y, &size.width, &size.height)
+	check_error()
 	return pos, size
 }
 
@@ -70,6 +72,7 @@ pub fn (m &Monitor) get_workarea() (Position, Size) {
 pub fn (m &Monitor) get_physical_size() Size {
 	size := Size{}
 	C.glfwGetMonitorPhysicalSize(m.data, &size.width, &size.height)
+	check_error()
 	return size
 }
 
@@ -77,49 +80,62 @@ pub fn (m &Monitor) get_physical_size() Size {
 pub fn (m &Monitor) get_content_scale() Scale {
 	scale := Scale{}
 	C.glfwGetMonitorContentScale(m.data, &scale.x, &scale.y)
+	check_error()
 	return scale
 }
 
 // Get monitor name
 pub fn (m &Monitor) get_name() string {
-	return tos3(C.glfwGetMonitorName(m.data))
+	name := C.glfwGetMonitorName(m.data)
+	check_error()
+	return tos3(name)
 }
 
 // Set monitor user pointer
 pub fn (m &Monitor) set_user_pointer(pointer voidptr) {
 	C.glfwSetMonitorUserPointer(m.data, pointer)
+	check_error()
 }
 
 // Get monitor user pointer
 pub fn (m &Monitor) get_user_pointer() voidptr {
-	return C.glfwGetMonitorUserPointer(m.data)
+	ptr := C.glfwGetMonitorUserPointer(m.data)
+	check_error()
+	return ptr
 }
 
 // Get video modes
 pub fn (m &Monitor) get_video_modes() []VideoMode {
 	count := 0
 	c_modes := C.glfwGetVideoModes(m.data, &count)
+	check_error()
+	//
 	mut v_modes := []VideoMode{len: count}
 	for idx := 0; idx < count; idx++ {
 		v_modes[idx] = create_vidmode(&c_modes[idx])
 	}
+	//
 	return v_modes
 }
 
 // Get current video mode
 pub fn (m &Monitor) get_current_video_mode() VideoMode {
 	vidmode := C.glfwGetVideoMode(m.data)
+	check_error()
 	return create_vidmode(vidmode)
 }
 
 // Set monito gamma
 pub fn (m &Monitor) set_gamma(gamma f32) {
 	C.glfwSetGamma(m.data, gamma)
+	check_error()
 }
 
 // Get gamma ramp
 pub fn (m &Monitor) get_gamma_ramp() &GammaRamp {
 	raw_data := C.glfwGetGammaRamp(m.data)
+	check_error()
+	//
 	if raw_data == &C.GLFWgammaramp(0) {
 		return &GammaRamp{
 			size: 0
@@ -134,4 +150,5 @@ pub fn (m &Monitor) get_gamma_ramp() &GammaRamp {
 // Set gamma ramp
 pub fn (m &Monitor) set_gamma_ramp(gr GammaRamp) {
 	C.glfwSetGammaRamp(m.data, gr.get_raw())
+	check_error()
 }

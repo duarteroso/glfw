@@ -23,16 +23,19 @@ pub fn create_cursor(data voidptr) &Cursor {
 // Create cursor
 pub fn create_cursor_with_image(image &Image, x, y int) &Cursor {
 	raw_data := C.glfwCreateCursor(image.data, x, y)
+	check_error()
 	return create_cursor(raw_data)
 }
 
 // Create standard cursor
 pub fn create_standard_cursor(shape int) &Cursor {
 	raw_data := C.glfwCreateStandardCursor(shape)
+	check_error()
 	return create_cursor(raw_data)
 }
 
 // Destroy cursor
 pub fn (c &Cursor) destroy_cursor() {
 	C.glfwDestroyCursor(c.data)
+	check_error()
 }

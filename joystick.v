@@ -40,18 +40,24 @@ pub fn create_joystick(id int) Joystick {
 
 // Is joystick present
 pub fn (j &Joystick) is_present() int {
-	return C.glfwJoystickPresent(j.id)
+	f := C.glfwJoystickPresent(j.id)
+	check_error()
+	return f
 }
 
 // Is joystick a gamepad
 pub fn (j &Joystick) is_gamepad() int {
-	return C.glfwJoystickIsGamepad(j.id)
+	b := C.glfwJoystickIsGamepad(j.id)
+	check_error()
+	return b
 }
 
 // Get joystick axes
 pub fn (j &Joystick) get_axes() []f64 {
 	count := 0
 	data := C.glfwGetJoystickAxes(j.id, &count)
+	check_error()
+	//
 	axes := []f64{len: count}
 	C.memcpy(axes.data, data, count)
 	return axes
@@ -61,6 +67,8 @@ pub fn (j &Joystick) get_axes() []f64 {
 pub fn (j &Joystick) get_buttons() []byte {
 	count := 0
 	data := C.glfwGetJoystickButtons(j.id, &count)
+	check_error()
+	//
 	btns := []byte{len: count}
 	C.memcpy(btns.data, voidptr(data), count)
 	return btns
@@ -70,6 +78,8 @@ pub fn (j &Joystick) get_buttons() []byte {
 pub fn (j &Joystick) get_hats() []byte {
 	count := 0
 	data := C.glfwGetJoystickHats(j.id, &count)
+	check_error()
+	//
 	hats := []byte{len: count}
 	C.memcpy(hats.data, voidptr(data), count)
 	return hats
@@ -77,31 +87,41 @@ pub fn (j &Joystick) get_hats() []byte {
 
 // Get joystick name
 pub fn (j &Joystick) get_name() string {
-	return tos3(C.glfwGetJoystickName(j.id))
+	n := C.glfwGetJoystickName(j.id)
+	check_error()
+	return tos3(n)
 }
 
 // Get joystic GUID
 pub fn (j &Joystick) get_uuid() string {
-	return tos3(C.glfwGetJoystickGUID(j.id))
+	guid := C.glfwGetJoystickGUID(j.id)
+	check_error()
+	return tos3(guid)
 }
 
 // Set joystick user pointer
 pub fn (j &Joystick) set_user_pointer(pointer voidptr) {
 	C.glfwSetJoystickUserPointer(j.id, pointer)
+	check_error()
 }
 
 // Get joystick user pointer
 pub fn (j &Joystick) get_user_pointer() voidptr {
-	return C.glfwGetJoystickUserPointer(j.id)
+	ptr := C.glfwGetJoystickUserPointer(j.id)
+	check_error()
+	return ptr
 }
 
 // Get gamepad name
 pub fn (j &Joystick) get_gamepad_name() string {
-	return tos3(C.glfwGetGamepadName(j.id))
+	n := C.glfwGetGamepadName(j.id)
+	check_error()
+	return tos3(n)
 }
 
 // Get gamepad state
 pub fn (j &Joystick) get_gamepad_state(buttons [15]byte, axes [6]f32) int {
 	ok := C.vglfwGetGamepadState(j.id, &buttons, &axes)
+	check_error()
 	return ok
 }
