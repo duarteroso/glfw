@@ -21,6 +21,6 @@ pub fn module_version() vsemver.SemVer {
 	return vsemver.SemVer{
 		major: 0
 		minor: 1
-		patch: 0
+		patch: 1
 	}
 }
