@@ -163,10 +163,10 @@ pub fn (w &Window) destroy_window() {
 }
 
 // Get window close flag
-pub fn (w &Window) should_close() int {
-	flag := C.glfwWindowShouldClose(w.data)
+pub fn (w &Window) should_close() bool {
+	v := C.glfwWindowShouldClose(w.data)
 	check_error()
-	return flag
+	return v == glfw_true
 }
 
 // Set window close flag
@@ -321,7 +321,6 @@ pub fn (w &Window) get_monitor() &Monitor {
 // Set window monitor
 pub fn (w &Window) set_monitor(monitor &Monitor, desc MonitorDesc) {
 	mut monitor_data := voidptr(0)
-	//
 	if !isnil(monitor) {
 		monitor_data = monitor.data
 	}
@@ -333,9 +332,9 @@ pub fn (w &Window) set_monitor(monitor &Monitor, desc MonitorDesc) {
 
 // Get window attribute
 pub fn (w &Window) get_attribute(attrib int) int {
-	flags := C.glfwGetWindowAttrib(w.data, attrib)
+	a := C.glfwGetWindowAttrib(w.data, attrib)
 	check_error()
-	return flags
+	return a
 }
 
 // Set window attribute
@@ -442,9 +441,9 @@ pub fn (w &Window) get_key(key int) int {
 
 // Get mouse button
 pub fn (w &Window) get_mouse_button(button int) int {
-	b := C.glfwGetMouseButton(w.data, button)
+	s := C.glfwGetMouseButton(w.data, button)
 	check_error()
-	return b
+	return s
 }
 
 // Get mouse cursor position

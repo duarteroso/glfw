@@ -68,10 +68,10 @@ fn C.glfwSetJoystickCallback(FnJoystick callback) FnJoystick
 fn C.glfwUpdateGamepadMappings(mappings charptr) int
 
 // Initialize GLFW
-pub fn initialize() int {
-	c := C.glfwInit()
+pub fn initialize() bool {
+	ok := C.glfwInit()
 	check_error()
-	return c
+	return ok == glfw_true
 }
 
 // Terminate GLFW
@@ -206,10 +206,10 @@ pub fn post_empty_event() {
 }
 
 // Is raw mouse motion supported
-pub fn is_raw_mouse_motion_supported() int {
-	v := C.glfwRawMouseMotionSupported()
+pub fn is_raw_mouse_motion_supported() bool {
+	ok := C.glfwRawMouseMotionSupported()
 	check_error()
-	return v
+	return ok == glfw_true
 }
 
 // Get key name
@@ -267,10 +267,10 @@ pub fn swap_interval(interval int) {
 }
 
 // Is extension supported
-pub fn is_extension_supported(extension string) int {
-	b := C.glfwExtensionSupported(extension.str)
+pub fn is_extension_supported(extension string) bool {
+	ok := C.glfwExtensionSupported(extension.str)
 	check_error()
-	return b
+	return ok == glfw_true
 }
 
 // Get proc adress
@@ -281,10 +281,10 @@ pub fn get_proc_address(proc_name string) FnGLProc {
 }
 
 // Is Vulkan supported
-pub fn is_vulkan_supported() int {
-	b := C.glfwVulkanSupported()
+pub fn is_vulkan_supported() bool {
+	ok := C.glfwVulkanSupported()
 	check_error()
-	return b
+	return ok == glfw_true
 }
 
 // Get required instance extensions
@@ -309,8 +309,8 @@ pub fn (j &Joystick) set_callback(cb FnJoystick) FnJoystick {
 }
 
 // Update gamepad mappings
-pub fn update_gamepad_mapping(mappings string) int {
-	b := C.glfwUpdateGamepadMappings(mappings.str)
+pub fn update_gamepad_mapping(mappings string) bool {
+	ok := C.glfwUpdateGamepadMappings(mappings.str)
 	check_error()
-	return b
+	return ok == glfw_true
 }
