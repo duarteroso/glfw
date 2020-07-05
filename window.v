@@ -439,6 +439,14 @@ pub fn (w &Window) get_key(key int) int {
 	return k
 }
 
+pub fn (w &Window) is_key_pressed(key int) bool {
+	return w.get_key(key) == glfw_press
+}
+
+pub fn (w &Window) is_key_released(key int) bool {
+	return w.get_key(key) == glfw_release
+}
+
 // Get mouse button
 pub fn (w &Window) get_mouse_button(button int) int {
 	s := C.glfwGetMouseButton(w.data, button)
