@@ -143,7 +143,6 @@ pub fn (m &Monitor) get_gamma_ramp() &GammaRamp {
 	}
 	//
 	gr := create_gammaramp(raw_data)
-	println('monitor ${gr.size}')
 	return gr
 }
 
