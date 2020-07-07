@@ -18,7 +18,7 @@ pub mut:
 	blue  []u16
 }
 
-// Create instance
+// create_gammaramp Create GammaRamp instance
 pub fn create_gammaramp(data voidptr) &GammaRamp {
 	raw_data := &C.GLFWgammaramp(data)
 	//
@@ -36,7 +36,7 @@ pub fn create_gammaramp(data voidptr) &GammaRamp {
 	return gr
 }
 
-// Convert to GLFWgammaramp
+// get_raw Convert to GLFWgammaramp
 fn (gr &GammaRamp) get_raw() &C.GLFWgammaramp {
 	return C.vglfwCreateGammaRamp(gr.size, &gr.red, &gr.green, &gr.blue)
 }

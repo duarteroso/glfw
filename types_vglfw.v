@@ -28,7 +28,7 @@ pub mut:
 	msg  string = ''
 }
 
-//
+// code_str Return error code as string
 pub fn (err &Error) code_str() string {
 	return match err.code {
 		glfw_no_error            { 'GLFW_NO_ERROR' }
@@ -45,7 +45,7 @@ pub fn (err &Error) code_str() string {
 	}
 }
 
-//
+// str Return error as string
 pub fn (err &Error) str() string {
 	return '${err.code_str()} - ${err.msg}'
 }

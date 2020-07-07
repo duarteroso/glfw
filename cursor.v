@@ -13,28 +13,28 @@ mut:
 	data &C.GLFWcursor = &C.GLFWcursor(0)
 }
 
-// Create instance
+// create_cursor Create Cursor instance
 pub fn create_cursor(data voidptr) &Cursor {
 	return &Cursor{
 		data: &C.GLFWcursor(data)
 	}
 }
 
-// Create cursor
+// create_cursor_with_image Create Cursor instance from an Image
 pub fn create_cursor_with_image(image &Image, x, y int) &Cursor {
 	raw_data := C.glfwCreateCursor(image.data, x, y)
 	check_error()
 	return create_cursor(raw_data)
 }
 
-// Create standard cursor
+// create_standard_cursor Create standard cursor
 pub fn create_standard_cursor(shape int) &Cursor {
 	raw_data := C.glfwCreateStandardCursor(shape)
 	check_error()
 	return create_cursor(raw_data)
 }
 
-// Destroy cursor
+// destroy_cursor Destroy cursor
 pub fn (c &Cursor) destroy_cursor() {
 	C.glfwDestroyCursor(c.data)
 	check_error()

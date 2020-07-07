@@ -19,7 +19,7 @@ import duarteroso.vsemver
 // Module init function
 fn init() {}
 
-// Module version
+// module_version Get module semantic versionin
 pub fn module_version() vsemver.SemVer {
 	return vsemver.SemVer{
 		major: 0
@@ -28,7 +28,7 @@ pub fn module_version() vsemver.SemVer {
 	}
 }
 
-//
+// glfw_version Get GLFW semantic versioning
 pub fn glfw_version() vsemver.SemVer {
 	return vsemver.SemVer {
 		major: glfw_version_major
@@ -37,7 +37,8 @@ pub fn glfw_version() vsemver.SemVer {
 	}
 }
 
-//
+// is_fully_supported Returns true if wrapper is
+// on par with the GLFW features
 pub fn is_fully_supported() bool {
 	mv := module_version()
 	gv := glfw_version()

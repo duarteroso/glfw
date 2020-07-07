@@ -39,19 +39,19 @@ pub mut:
 	refresh_rate int
 }
 
-// Create monitor from raw pointer
+// create_monitor Create Monitor instance from raw pointer
 pub fn create_monitor(data voidptr) &Monitor {
 	return &Monitor{
 		data: &C.GLFWmonitor(data)
 	}
 }
 
-// Set monitor data
+// set_data Set monitor data
 pub fn (mut m Monitor) set_data(data voidptr) {
 	m.data = &C.GLFWmonitor(data)
 }
 
-// Get monitor position
+// get_pos Get monitor position
 pub fn (m &Monitor) get_pos() Position {
 	pos := Position{}
 	C.glfwGetMonitorPos(m.data, &pos.x, &pos.y)
@@ -59,7 +59,7 @@ pub fn (m &Monitor) get_pos() Position {
 	return pos
 }
 
-// Get monitor workarea
+// get_workarea Get monitor workarea
 pub fn (m &Monitor) get_workarea() (Position, Size) {
 	pos := Position{}
 	size := Size{}
@@ -68,7 +68,7 @@ pub fn (m &Monitor) get_workarea() (Position, Size) {
 	return pos, size
 }
 
-// Get monitor physical size
+// get_physical_size Get monitor physical size
 pub fn (m &Monitor) get_physical_size() Size {
 	size := Size{}
 	C.glfwGetMonitorPhysicalSize(m.data, &size.width, &size.height)
@@ -76,7 +76,7 @@ pub fn (m &Monitor) get_physical_size() Size {
 	return size
 }
 
-// Get monitor content scale
+// get_content_scale Get monitor content scale
 pub fn (m &Monitor) get_content_scale() Scale {
 	scale := Scale{}
 	C.glfwGetMonitorContentScale(m.data, &scale.x, &scale.y)
@@ -84,27 +84,27 @@ pub fn (m &Monitor) get_content_scale() Scale {
 	return scale
 }
 
-// Get monitor name
+// get_name Get monitor name
 pub fn (m &Monitor) get_name() string {
 	name := C.glfwGetMonitorName(m.data)
 	check_error()
 	return tos3(name)
 }
 
-// Set monitor user pointer
+// set_user_pointer Set monitor user pointer
 pub fn (m &Monitor) set_user_pointer(pointer voidptr) {
 	C.glfwSetMonitorUserPointer(m.data, pointer)
 	check_error()
 }
 
-// Get monitor user pointer
+// get_user_pointer_Get monitor user pointer
 pub fn (m &Monitor) get_user_pointer() voidptr {
 	ptr := C.glfwGetMonitorUserPointer(m.data)
 	check_error()
 	return ptr
 }
 
-// Get video modes
+// get_video_modes Get video modes
 pub fn (m &Monitor) get_video_modes() []VideoMode {
 	count := 0
 	c_modes := C.glfwGetVideoModes(m.data, &count)
@@ -118,20 +118,20 @@ pub fn (m &Monitor) get_video_modes() []VideoMode {
 	return v_modes
 }
 
-// Get current video mode
+// get_current_video_mode Get current video mode
 pub fn (m &Monitor) get_current_video_mode() VideoMode {
 	vidmode := C.glfwGetVideoMode(m.data)
 	check_error()
 	return create_vidmode(vidmode)
 }
 
-// Set monito gamma
+// set_gamma Set monitor gamma
 pub fn (m &Monitor) set_gamma(gamma f32) {
 	C.glfwSetGamma(m.data, gamma)
 	check_error()
 }
 
-// Get gamma ramp
+// get_gamma_ramp Get GamaRamp instance
 pub fn (m &Monitor) get_gamma_ramp() &GammaRamp {
 	raw_data := C.glfwGetGammaRamp(m.data)
 	check_error()
@@ -146,7 +146,7 @@ pub fn (m &Monitor) get_gamma_ramp() &GammaRamp {
 	return gr
 }
 
-// Set gamma ramp
+// set_gamma_ramp Set gamma ramp
 pub fn (m &Monitor) set_gamma_ramp(gr GammaRamp) {
 	C.glfwSetGammaRamp(m.data, gr.get_raw())
 	check_error()

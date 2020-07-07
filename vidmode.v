@@ -19,7 +19,7 @@ pub:
 	refresh_rate int
 }
 
-// Create instance
+// create_vidmode Create VideoMode instance
 pub fn create_vidmode(data voidptr) VideoMode {
 	raw_data := &C.GLFWvidmode(data)
 	v := VideoMode{}

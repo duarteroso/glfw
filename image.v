@@ -9,6 +9,7 @@ mut:
 	data &C.GLFWimage = &C.GLFWimage(0)
 }
 
+// create_image Create instance of Image
 pub fn create_image(width, height int, pixels []byte) &Image {
 	raw_data := C.vglfwCreateImage(width, height, string(pixels).str)
 	return &Image{
