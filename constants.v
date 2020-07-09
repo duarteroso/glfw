@@ -315,7 +315,7 @@ pub const (
 	glfw_opengl_any_profile       = 0
 	glfw_opengl_core_profile      = 0x00032001
 	glfw_opengl_compat_profile    = 0x00032002
-	//
+	// Window input modes
 	glfw_cursor                   = 0x00033001
 	glfw_sticky_keys              = 0x00033002
 	glfw_sticky_mouse_buttons     = 0x00033003
