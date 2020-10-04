@@ -29,6 +29,7 @@ pub fn module_version() vsemver.SemVer {
 		major: 0
 		minor: 2
 		patch: 1
+		stage: .alpha
 	}
 }
 
