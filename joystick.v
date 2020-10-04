@@ -1,6 +1,12 @@
 module vglfw
 
+// C headers
+#include <GLFW/glfw3.h>
+#include "gamepadstate.h"
+
 // Forward declaration
+[typedef] struct C.GLFWgamepadstate { }
+
 fn C.glfwJoystickPresent(jid int) int
 
 fn C.glfwJoystickIsGamepad(jid int) int
@@ -59,7 +65,7 @@ pub fn (j &Joystick) get_axes() []f64 {
 	check_error()
 	//
 	axes := []f64{len: count}
-	C.memcpy(axes.data, data, count)
+	unsafe { C.memcpy(axes.data, data, count) }
 	return axes
 }
 
@@ -70,7 +76,7 @@ pub fn (j &Joystick) get_buttons() []byte {
 	check_error()
 	//
 	btns := []byte{len: count}
-	C.memcpy(btns.data, voidptr(data), count)
+	unsafe { C.memcpy(btns.data, voidptr(data), count) }
 	return btns
 }
 
@@ -81,7 +87,7 @@ pub fn (j &Joystick) get_hats() []byte {
 	check_error()
 	//
 	hats := []byte{len: count}
-	C.memcpy(hats.data, voidptr(data), count)
+	unsafe { C.memcpy(hats.data, voidptr(data), count) }
 	return hats
 }
 
@@ -120,7 +126,7 @@ pub fn (j &Joystick) get_gamepad_name() string {
 }
 
 // get_gamepad_state Get gamepad state
-pub fn (j &Joystick) get_gamepad_state(buttons [15]byte, axes [6]f32) bool {
+pub fn (j &Joystick) get_gamepad_state(buttons [15]byte, axes [6]f64) bool {
 	ok := C.vglfwGetGamepadState(j.id, &buttons, &axes)
 	check_error()
 	return ok == glfw_true

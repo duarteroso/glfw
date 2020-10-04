@@ -2,6 +2,9 @@ module vglfw
 
 import duarteroso.vsemver
 
+// C headers
+#include <GLFW/glfw3.h>
+
 // Forward declaration
 fn C.glfwInit() int
 
@@ -68,14 +71,14 @@ fn C.glfwSetJoystickCallback(FnJoystick callback) FnJoystick
 fn C.glfwUpdateGamepadMappings(mappings charptr) int
 
 // initialize Initialize GLFW
-pub fn initialize() bool {
+fn initialize() bool {
 	ok := C.glfwInit()
 	check_error()
 	return ok == glfw_true
 }
 
 // terminate Terminate GLFW
-pub fn terminate() {
+fn terminate() {
 	C.glfwTerminate()
 	check_error()
 }
@@ -133,25 +136,25 @@ pub fn set_error_callback(cb FnError) FnError {
 }
 
 // get_monitors Get monitors
-pub fn get_monitors() []Monitor {
+pub fn get_monitors() []&Monitor {
 	count := 0
 	c_monitors := C.glfwGetMonitors(&count)
 	check_error()
 	//
-	mut v_monitors := []Monitor{len: count}
+	mut v_monitors := []&Monitor{len: count}
 	for idx := 0; idx < count; idx++ {
-		v_monitors[idx].data = c_monitors[idx]
+		unsafe { v_monitors[idx].data = c_monitors[idx] }
 	}
 	return v_monitors
 }
 
 // get_primary_monitor Get primary monitor
-pub fn get_primary_monitor() Monitor {
-	c_monitor := C.glfwGetPrimaryMonitor()
+pub fn get_primary_monitor() &Monitor {
+	raw_data := C.glfwGetPrimaryMonitor()
 	check_error()
 	//
-	v_monitor := Monitor{
-		data: c_monitor
+	v_monitor := &Monitor{
+		data: raw_data
 	}
 	//
 	return v_monitor
@@ -296,7 +299,7 @@ pub fn get_required_instance_extensions() []string {
 	//
 	mut exts := []string{len: int(count)}
 	for i := 0; i < count; i++ {
-		exts[i] = tos3(data[i])
+		unsafe { exts[i] = tos3(data[i]) }
 	}
 	//
 	return exts

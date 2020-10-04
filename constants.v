@@ -8,7 +8,7 @@ pub const (
 	//
 	glfw_true             = 1
 	glfw_false            = 0
-	//
+	// Key actions
 	glfw_release          = 0
 	glfw_press            = 1 << 0
 	glfw_repeat           = 1 << 1
@@ -28,7 +28,7 @@ pub const (
 	glfw_hat_left_down  = (glfw_hat_left | glfw_hat_down)
 )
 
-// Keyboard
+// Keyboard key codes
 pub const (
 	// The unknown key
 	glfw_key_unknown       = -1
@@ -157,7 +157,7 @@ pub const (
 	glfw_key_last          = glfw_key_menu
 )
 
-// Modifier keys
+// Keyboard modifier keys
 pub const (
 	glfw_mod_shift     = 1 << 0
 	glfw_mod_control   = 1 << 1
@@ -167,7 +167,7 @@ pub const (
 	glfw_mod_num_lock  = 1 << 5
 )
 
-// Mouse
+// Mouse buttons
 pub const (
 	glfw_mouse_button_1      = 0
 	glfw_mouse_button_2      = 1
@@ -183,7 +183,7 @@ pub const (
 	glfw_mouse_button_middle = glfw_mouse_button_3
 )
 
-// Joystick
+// Joystick enumeration
 pub const (
 	//
 	glfw_joystick_1    = 0
@@ -205,7 +205,7 @@ pub const (
 	glfw_joystick_last = glfw_joystick_16
 )
 
-// Gamepad
+// Gamepad buttons
 pub const (
 	glfw_gamepad_button_a            = 0
 	glfw_gamepad_button_b            = 1
@@ -229,7 +229,7 @@ pub const (
 	glfw_gamepad_button_triangle     = glfw_gamepad_button_y
 )
 
-// Axis
+// Gamepad axis
 pub const (
 	glfw_gamepad_axis_left_x        = 0
 	glfw_gamepad_axis_left_y        = 1

@@ -1,6 +1,11 @@
 module vglfw
 
+// C headers
+#include "gammaramp.h"
+
 // Forward declaration
+[typedef] struct C.GLFWgammaramp { }
+
 fn C.vglfwGetGammaRampSize(gr &C.GLFWgammaramp, size &u32)
 
 fn C.vglfwGetGammaRampRGBBits(gr &C.GLFWgammaramp, r, g, b &u16)

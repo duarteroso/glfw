@@ -8,16 +8,20 @@ import duarteroso.vsemver
 // Linux
 #flag linux -lglfw
 
-// C headers
-#include <GLFW/glfw3.h>
-#include <vulkan/vulkan.h>
-#include "vidmode.h"
-#include "gammaramp.h"
-#include "image.h"
-#include "gamepadstate.h"
+// init
+fn init() {
+}
 
-// Module init function
-fn init() {}
+// load_module Load module
+pub fn load_module() {
+	ok := initialize()
+	assert ok
+}
+
+// unload_module Unload module
+pub fn unload_module() {
+	terminate()
+}
 
 // module_version Get module semantic versionin
 pub fn module_version() vsemver.SemVer {

@@ -7,7 +7,7 @@ GLFW bindings for the V language.
 Please follow the official [GLFW documentation](https://www.glfw.org/documentation.html)
 
 ### Install
-`v install duarteroso.vglfw`
+`v install novuloj.vglfw`
 
 ### Authors
 @duarteroso

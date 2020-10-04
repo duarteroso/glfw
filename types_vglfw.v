@@ -1,31 +1,40 @@
 module vglfw
 
-//
+// Position GLFW position
 pub struct Position {
 pub mut:
 	x int
 	y int
 }
 
-//
+// Scale GLFW scale
 pub struct Scale {
 pub mut:
 	x f32
 	y f32
 }
 
-//
+// Size GLFW size
 pub struct Size {
 pub mut:
 	width  int
 	height int
 }
 
-//
+// Rect Window rectagle
+pub struct Rect {
+pub mut:
+	left   int
+	top    int
+	right  int
+	bottom int
+}
+
+// Error GLFW error
 pub struct Error {
 pub mut:
-	code int = 0
-	msg  string = ''
+	code int
+	msg  string
 }
 
 // code_str Return error code as string
@@ -48,13 +57,4 @@ pub fn (err &Error) code_str() string {
 // str Return error as string
 pub fn (err &Error) str() string {
 	return '${err.code_str()} - ${err.msg}'
-}
-
-//
-pub struct Rect {
-pub mut:
-	left   int
-	top    int
-	right  int
-	bottom int
 }

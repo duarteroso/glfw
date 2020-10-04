@@ -1,20 +1,5 @@
 module vglfw
 
-// Structures
-// struct C.GLFWmonitor
-// struct C.GLFWwindow
-// struct C.GLFWcursor
-// struct C.GLFWvidmode
-// struct C.GLFWgammaramp
-// struct C.GLFWimage
-// struct C.GLFWgamepadstate
-//
-// Vulkan (TODO: v bidings of vulkan)
-// struct C.VkInstance
-// struct C.VkPhysicalDevice
-// struct C.VkAllocationCallbacks
-// struct C.VkSurfaceKHR
-//
 // Function pointers
 type FnGLProc = fn ()
 
@@ -22,39 +7,39 @@ type FnVkProc = fn ()
 
 type FnError = fn (code int, err charptr)
 
-type FnWindowPos = fn (window voidptr, x_pos, y_pos int)
+type FnWindowPos = fn (window &C.GLFWwindow, x_pos, y_pos int)
 
-type FnWindowSize = fn (window voidptr, width, height int)
+type FnWindowSize = fn (window &C.GLFWwindow, width, height int)
 
-type FnWindowClose = fn (window voidptr)
+type FnWindowClose = fn (window &C.GLFWwindow)
 
-type FnWindowRefresh = fn (window voidptr)
+type FnWindowRefresh = fn (window &C.GLFWwindow)
 
-type FnWindowFocus = fn (window voidptr, focus int)
+type FnWindowFocus = fn (window &C.GLFWwindow, focus int)
 
-type FnWindowIconify = fn (window voidptr, iconified int)
+type FnWindowIconify = fn (window &C.GLFWwindow, iconified int)
 
-type FnWindowMaximize = fn (window voidptr, maximized int)
+type FnWindowMaximize = fn (window &C.GLFWwindow, maximized int)
 
-type FnFramebufferSize = fn (window voidptr, width, height int)
+type FnFramebufferSize = fn (window &C.GLFWwindow, width, height int)
 
-type FnWindowContentScale = fn (window voidptr, x_scale, y_scale f32)
+type FnWindowContentScale = fn (window &C.GLFWwindow, x_scale, y_scale f32)
 
-type FnMouseButton = fn (window voidptr, button, action, bit_field int)
+type FnMouseButton = fn (window &C.GLFWwindow, button, action, bit_field int)
 
-type FnCursorPos = fn (window voidptr, x_pos, y_pos f64)
+type FnCursorPos = fn (window &C.GLFWwindow, x_pos, y_pos f64)
 
-type FnCursorEnter = fn (window voidptr, entered int)
+type FnCursorEnter = fn (window &C.GLFWwindow, entered int)
 
-type FnScroll = fn (window voidptr, x_offset, y_offset f64)
+type FnScroll = fn (window &C.GLFWwindow, x_offset, y_offset f64)
 
-type FnKey = fn (window voidptr, key_id, scan_code, action, bit_filed int)
+type FnKey = fn (window &C.GLFWwindow, key_id, scan_code, action, bit_filed int)
 
-type FnChar = fn (window voidptr, unicode u32)
+type FnChar = fn (window &C.GLFWwindow, unicode u32)
 
-type FnCharMods = fn (window voidptr, unicode u32, bit_field int)
+type FnCharMods = fn (window &C.GLFWwindow, unicode u32, bit_field int)
 
-type FnDrop = fn (window voidptr, path_count int, paths &charptr)
+type FnDrop = fn (window &C.GLFWwindow, path_count int, paths &charptr)
 
 type FnMonitor = fn (monitor voidptr, event int)
 

@@ -1,14 +1,19 @@
 module vglfw
 
-// Forward declaration of helper methods to
-// handle GLFWvidmode
+// C headers
+#include "vidmode.h"
+
+// Forward declaration 
+[typedef] struct C.GLFWvidmode { }
+
+// Helper methods to handle GLFWvidmode
 fn C.vglfwGetVidModeSize(vidmode &C.GLFWvidmode, width, height &int)
 
 fn C.vglfwGetVidModeRGBBits(vidmode &C.GLFWvidmode, r, g, b &int)
 
 fn C.vglfwGetVidModeRefreshRate(vidmode &C.GLFWvidmode, rate &int)
 
-// Video mode of a monitor
+// VideoMode Video mode of a monitor
 pub struct VideoMode {
 pub:
 	width        int

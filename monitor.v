@@ -1,6 +1,11 @@
 module vglfw
 
-// Forward declaration of GLFWmonitor methods
+// C headers
+#include <GLFW/glfw3.h>
+
+// Forward declaration
+[typedef] struct C.GLFWmonitor { }
+
 fn C.glfwGetMonitorPos(monitor &C.GLFWmonitor, x_pos, y_pos &int)
 
 fn C.glfwGetMonitorWorkarea(monitor &C.GLFWmonitor, x_pos, y_pos, width, height &int)
@@ -112,7 +117,7 @@ pub fn (m &Monitor) get_video_modes() []VideoMode {
 	//
 	mut v_modes := []VideoMode{len: count}
 	for idx := 0; idx < count; idx++ {
-		v_modes[idx] = create_vidmode(&c_modes[idx])
+		unsafe { v_modes[idx] = create_vidmode(&c_modes[idx]) }
 	}
 	//
 	return v_modes

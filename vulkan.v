@@ -1,14 +1,22 @@
 module vglfw
 
-/*
-TODO
+// C headers
+#include <GLFW/glfw3.h>
+#include <vulkan/vulkan.h>
 
+// TODO
+/*
 // Forward declaration
+[typedef] struct C.VkInstance { }
+[typedef] struct C.VkPhysicalDevice { }
+[typedef] struct C.VkAllocationCallbacks { }
+[typedef] struct C.VkSurfaceKHR { }
+
 fn C.glfwGetInstanceProcAddress(instance C.VkInstance, procname charptr) FnVkProc
 fn C.glfwGetPhysicalDevicePresentationSupport(instance C.VkInstance, device C.VkPhysicalDevice, queuefamily u32) int
 fn C.glfwCreateWindowSurface(instance C.VkInstance, window &C.GLFWwindow, allocator &C.VkAllocationCallbacks, surface &VkSurfaceKHR) C.VkResult
 
-// Wrapper for VkInstance
+// Vulkan Wrapper for VkInstance
 pub struct Vulkan{
 mut:
 	data &C.VkInstance = &C.VkInstance(0)
