@@ -1,8 +1,5 @@
 module vglfw
 
-// C headers
-#include <GLFW/glfw3.h>
-
 // Forward declaration
 [typedef] struct C.GLFWmonitor { }
 
@@ -30,13 +27,13 @@ fn C.glfwGetGammaRamp(monitor &C.GLFWmonitor) &C.GLFWgammaramp
 
 fn C.glfwSetGammaRamp(monitor &C.GLFWmonitor, ramp &C.GLFWgammaramp)
 
-// Wrapper around GLFWmonitor
+// Monitor wraps the functionality of GLFWmonitor 
 pub struct Monitor {
 mut:
 	data &C.GLFWmonitor = &C.GLFWmonitor(0)
 }
 
-// Monitor descinition
+// MonitorDesc describes the basic properties of a Monitor
 pub struct MonitorDesc {
 pub mut:
 	pos          Position
@@ -44,19 +41,19 @@ pub mut:
 	refresh_rate int
 }
 
-// create_monitor Create Monitor instance from raw pointer
-pub fn create_monitor(data voidptr) &Monitor {
+// create_monitor creates a Monitor instance from raw data
+pub fn create_monitor(data &C.GLFWmonitor) &Monitor {
 	return &Monitor{
-		data: &C.GLFWmonitor(data)
+		data: data
 	}
 }
 
-// set_data Set monitor data
-pub fn (mut m Monitor) set_data(data voidptr) {
-	m.data = &C.GLFWmonitor(data)
+// set_data links data to a monitor
+pub fn (mut m Monitor) set_data(data &C.GLFWmonitor) {
+	m.data = data
 }
 
-// get_pos Get monitor position
+// get_pos returns the position of the monitor
 pub fn (m &Monitor) get_pos() Position {
 	pos := Position{}
 	C.glfwGetMonitorPos(m.data, &pos.x, &pos.y)
@@ -64,7 +61,7 @@ pub fn (m &Monitor) get_pos() Position {
 	return pos
 }
 
-// get_workarea Get monitor workarea
+// get_workarea returns the workarea of the monitor
 pub fn (m &Monitor) get_workarea() (Position, Size) {
 	pos := Position{}
 	size := Size{}
@@ -73,7 +70,7 @@ pub fn (m &Monitor) get_workarea() (Position, Size) {
 	return pos, size
 }
 
-// get_physical_size Get monitor physical size
+// get_physical_size returns the physical size of the monitor
 pub fn (m &Monitor) get_physical_size() Size {
 	size := Size{}
 	C.glfwGetMonitorPhysicalSize(m.data, &size.width, &size.height)
@@ -81,7 +78,7 @@ pub fn (m &Monitor) get_physical_size() Size {
 	return size
 }
 
-// get_content_scale Get monitor content scale
+// get_content_scale returns the content scale of the monitor
 pub fn (m &Monitor) get_content_scale() Scale {
 	scale := Scale{}
 	C.glfwGetMonitorContentScale(m.data, &scale.x, &scale.y)
@@ -89,27 +86,27 @@ pub fn (m &Monitor) get_content_scale() Scale {
 	return scale
 }
 
-// get_name Get monitor name
+// get_name returns the name of the monitor
 pub fn (m &Monitor) get_name() string {
 	name := C.glfwGetMonitorName(m.data)
 	check_error()
 	return tos3(name)
 }
 
-// set_user_pointer Set monitor user pointer
+// set_user_pointer links user data to the monitor
 pub fn (m &Monitor) set_user_pointer(pointer voidptr) {
 	C.glfwSetMonitorUserPointer(m.data, pointer)
 	check_error()
 }
 
-// get_user_pointer_Get monitor user pointer
+// get_user_pointer returns the linked user data of the monitor
 pub fn (m &Monitor) get_user_pointer() voidptr {
 	ptr := C.glfwGetMonitorUserPointer(m.data)
 	check_error()
 	return ptr
 }
 
-// get_video_modes Get video modes
+// get_video_modes returns an array of video modes supported by the monitor
 pub fn (m &Monitor) get_video_modes() []VideoMode {
 	count := 0
 	c_modes := C.glfwGetVideoModes(m.data, &count)
@@ -123,35 +120,34 @@ pub fn (m &Monitor) get_video_modes() []VideoMode {
 	return v_modes
 }
 
-// get_current_video_mode Get current video mode
+// get_current_video_mode returns the current video mode of the monitor
 pub fn (m &Monitor) get_current_video_mode() VideoMode {
 	vidmode := C.glfwGetVideoMode(m.data)
 	check_error()
 	return create_vidmode(vidmode)
 }
 
-// set_gamma Set monitor gamma
+// set_gamma sets the monitor gamma value
 pub fn (m &Monitor) set_gamma(gamma f32) {
 	C.glfwSetGamma(m.data, gamma)
 	check_error()
 }
 
-// get_gamma_ramp Get GamaRamp instance
+// get_gamma_ramp returns the GamaRamp instance of the monitor
+// Returns nil if GammaRamp is missing
 pub fn (m &Monitor) get_gamma_ramp() &GammaRamp {
 	raw_data := C.glfwGetGammaRamp(m.data)
 	check_error()
 	//
 	if raw_data == &C.GLFWgammaramp(0) {
-		return &GammaRamp{
-			size: 0
-		}
+		return &GammaRamp(0)
 	}
 	//
 	gr := create_gammaramp(raw_data)
 	return gr
 }
 
-// set_gamma_ramp Set gamma ramp
+// set_gamma_ramp sets the gamma ramp of the monitor
 pub fn (m &Monitor) set_gamma_ramp(gr GammaRamp) {
 	C.glfwSetGammaRamp(m.data, gr.get_raw())
 	check_error()

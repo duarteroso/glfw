@@ -1,8 +1,5 @@
 module vglfw
 
-// C headers
-#include "vidmode.h"
-
 // Forward declaration 
 [typedef] struct C.GLFWvidmode { }
 
@@ -13,7 +10,7 @@ fn C.vglfwGetVidModeRGBBits(vidmode &C.GLFWvidmode, r, g, b &int)
 
 fn C.vglfwGetVidModeRefreshRate(vidmode &C.GLFWvidmode, rate &int)
 
-// VideoMode Video mode of a monitor
+// VideoMode represents the video mode of a monitor
 pub struct VideoMode {
 pub:
 	width        int
@@ -24,7 +21,7 @@ pub:
 	refresh_rate int
 }
 
-// create_vidmode Create VideoMode instance
+// create_vidmode creates a VideoMode instance
 pub fn create_vidmode(data voidptr) VideoMode {
 	raw_data := &C.GLFWvidmode(data)
 	v := VideoMode{}

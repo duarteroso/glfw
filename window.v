@@ -1,8 +1,5 @@
 module vglfw
 
-// C headers
-#include <GLFW/glfw3.h>
-
 // Forward declaration
 [typedef] struct C.GLFWwindow { }
 
@@ -122,27 +119,27 @@ fn C.glfwSwapBuffers(window &C.GLFWwindow)
 
 fn C.glfwMakeContextCurrent(window &C.GLFWwindow)
 
-// Window Wrapper around GLFWwindow
+// Window wraps the functionality of GLFWwindow 
 pub struct Window {
 mut:
 	data &C.GLFWwindow = &C.GLFWwindow(0)
 }
 
-// WindowDesc Window descriptor
+// WindowDesc describes the basic properties of a window
 pub struct WindowDesc {
 pub mut:
 	size  Size
 	title string
 }
 
-// create_window Create window from raw data
-pub fn create_window(data voidptr) &Window {
+// create_window creates a Window from raw data
+pub fn create_window(data &C.GLFWwindow) &Window {
 	return &Window{
-		data: &C.GLFWwindow(data)
+		data: data
 	}
 }
 
-// create_window_desc Create window from description
+// create_window_desc creates a window from a description
 pub fn create_window_desc(desc WindowDesc, monitor &Monitor, share &Window) &Window {
 	mut monitor_data := &C.GLFWmonitor(0)
 	// Has monitor data
@@ -161,39 +158,39 @@ pub fn create_window_desc(desc WindowDesc, monitor &Monitor, share &Window) &Win
 	return create_window(raw_data)
 }
 
-// destroy_window Destroy Window
+// destroy_window destroys the Window instance
 pub fn (mut w Window) destroy_window() {
 	C.glfwDestroyWindow(w.data)
 	check_error()
 	w.data = &C.GLFWwindow(0)
 }
 
-// should_close True if window is closing
+// should_close returns true if window is closing
 pub fn (w &Window) should_close() bool {
 	v := C.glfwWindowShouldClose(w.data)
 	check_error()
 	return v == glfw_true
 }
 
-// set_should_close Set window closing flag
+// set_should_close sets the window to close
 pub fn (w &Window) set_should_close(flag int) {
 	C.glfwSetWindowShouldClose(w.data, flag)
 	check_error()
 }
 
-// set_title Set window title
+// set_title sets the window title
 pub fn (w &Window) set_title(title string) {
 	C.glfwSetWindowTitle(w.data, title.str)
 	check_error()
 }
 
-// set_icon Set window icon
+// set_icon sets the window icon
 pub fn (w &Window) set_icon(images []Image) {
 	C.glfwSetWindowIcon(w.data, images.len, images.data)
 	check_error()
 }
 
-// get_position Get window position
+// position gets the window position
 pub fn (w &Window) get_position() Position {
 	pos := Position{}
 	C.glfwGetWindowPos(w.data, &pos.x, &pos.y)
@@ -201,13 +198,13 @@ pub fn (w &Window) get_position() Position {
 	return pos
 }
 
-// set_position Set window position
+// set_position sets the window position
 pub fn (w &Window) set_position(x, y int) {
 	C.glfwSetWindowPos(w.data, x, y)
 	check_error()
 }
 
-// get_size Get window size
+// get_size gets the window size
 pub fn (w &Window) get_size() Size {
 	size := Size{}
 	C.glfwGetWindowSize(w.data, &size.width, &size.height)
@@ -215,7 +212,7 @@ pub fn (w &Window) get_size() Size {
 	return size
 }
 
-// set_size Set window size
+// set_size sets the window size
 pub fn (w &Window) set_size(width, height int) {
 	C.glfwSetWindowSize(w.data, width, height)
 	check_error()
@@ -227,13 +224,13 @@ pub fn (w &Window) set_size_limits(min, max Size) {
 	check_error()
 }
 
-// set_aspect_ratio Set window aspect ratio
+// set_aspect_ratio sets the window aspect ratio
 pub fn (w &Window) set_aspect_ratio(numerator, denominator int) {
 	C.glfwSetWindowAspectRatio(w.data, numerator, denominator)
 	check_error()
 }
 
-// get_framebuffer_size Get framebuffer size
+// get_framebuffer_size gets the window framebuffer size
 pub fn (w &Window) get_framebuffer_size() Size {
 	size := Size{}
 	C.glfwGetFramebufferSize(w.data, &size.width, &size.height)
@@ -241,7 +238,7 @@ pub fn (w &Window) get_framebuffer_size() Size {
 	return size
 }
 
-// get_frame_size Get window frame size
+// get_frame_size gets the window frame size
 pub fn (w &Window) get_frame_size() Rect {
 	rect := Rect{}
 	C.glfwGetWindowFrameSize(w.data, &rect.left, &rect.top, &rect.right, &rect.bottom)
@@ -249,7 +246,7 @@ pub fn (w &Window) get_frame_size() Rect {
 	return rect
 }
 
-// get_content_scale Get window contect scale
+// get_content_scale gets the window contect scale
 pub fn (w &Window) get_content_scale() Scale {
 	scale := Scale{}
 	C.glfwGetWindowContentScale(w.data, &scale.x, &scale.y)
@@ -257,62 +254,63 @@ pub fn (w &Window) get_content_scale() Scale {
 	return scale
 }
 
-// get_opacity Get window opacity
+// get_opacity gets the window opacity
 pub fn (w &Window) get_opacity() f32 {
 	o := C.glfwGetWindowOpacity(w.data)
 	check_error()
 	return o
 }
 
-// set_opacity Set window opacity
+// set_opacity sets the window opacity
 pub fn (w &Window) set_opacity(opacity f32) {
 	C.glfwSetWindowOpacity(w.data, opacity)
 	check_error()
 }
 
-// iconify Iconify window
+// iconify sets the window to iconify (minimize)
 pub fn (w &Window) iconify() {
 	C.glfwIconifyWindow(w.data)
 	check_error()
 }
 
-// restore Restore window
+// restore forces the windw to restore
 pub fn (w &Window) restore() {
 	C.glfwRestoreWindow(w)
 	check_error()
 }
 
-// maximize Maximize window
+// maximize sets the window to maximize
 pub fn (w &Window) maximize() {
 	C.glfwMaximizeWindow(w.data)
 	check_error()
 }
 
-// show Show window
+// show forces the window to show
 pub fn (w &Window) show() {
 	C.glfwShowWindow(w.data)
 	check_error()
 }
 
-// hide Hide window
+// hide forces the window to hide
 pub fn (w &Window) hide() {
 	C.glfwHideWindow(w.data)
 	check_error()
 }
 
-// focus Focus window
+// focus gives focus to the window
 pub fn (w &Window) focus() {
 	C.glfwFocusWindow(w.data)
 	check_error()
 }
 
-// request_attention Request window attention
+// request_attention makes the window request the user attention
 pub fn (w &Window) request_attention() {
 	C.glfwRequestWindowAttention(w.data)
 	check_error()
 }
 
-// get_monitor Get window monitor
+// get_monitor gets the Monitor linked to the window.
+// Returns nil if no Monitor was linked
 pub fn (w &Window) get_monitor() &Monitor {
 	raw_data := C.glfwGetWindowMonitor(w.data)
 	check_error()
@@ -324,7 +322,7 @@ pub fn (w &Window) get_monitor() &Monitor {
 	return create_monitor(raw_data)
 }
 
-// set_monitor Set window monitor
+// set_monitor link a Monitor to the window
 pub fn (w &Window) set_monitor(monitor &Monitor, desc MonitorDesc) {
 	mut monitor_data := &C.GLFWmonitor(0)
 	if !isnil(monitor) {
@@ -338,123 +336,123 @@ pub fn (w &Window) set_monitor(monitor &Monitor, desc MonitorDesc) {
 	check_error()
 }
 
-// get_attribute Get window attribute
+// get_attribute retrieves an attribute of the window
 pub fn (w &Window) get_attribute(attrib int) int {
 	a := C.glfwGetWindowAttrib(w.data, attrib)
 	check_error()
 	return a
 }
 
-// set_attribute Set window attribute
+// set_attribute writes an attribute of the window
 pub fn (w &Window) set_attribute(attrib, value int) {
 	C.glfwSetWindowAttrib(w.data, attrib, value)
 	check_error()
 }
 
-// set_user_pointer Set window user pointer
+// set_user_pointer links user data to the window
 pub fn (w &Window) set_user_pointer(pointer voidptr) {
 	C.glfwSetWindowUserPointer(w.data, pointer)
 	check_error()
 }
 
-// get_user_pointer Get window user point
+// get_user_pointer returns the linked user data of the window
 pub fn (w &Window) get_user_pointer(pointer voidptr) voidptr {
 	ptr := C.glfwGetWindowUserPointer(w.data)
 	check_error()
 	return ptr
 }
 
-// set_position_callback Set window position callback
+// set_position_callback sets the window position changed callback
 pub fn (w &Window) set_position_callback(cb FnWindowPos) FnWindowPos {
 	prev := C.glfwSetWindowPosCallback(w.data, cb)
 	check_error()
 	return prev
 }
 
-// get_size_callback Set window size callback
+// get_size_callback sets the window size changed callback
 pub fn (w &Window) set_size_callback(cb FnWindowSize) FnWindowSize {
 	prev := C.glfwSetWindowSizeCallback(w, cb)
 	check_error()
 	return prev
 }
 
-// set_close_callback Set window close callback
+// set_close_callback sets the window closed callback
 pub fn (w &Window) set_close_callback(cb FnWindowClose) FnWindowClose {
 	prev := C.glfwSetWindowCloseCallback(w.data, cb)
 	check_error()
 	return prev
 }
 
-// set_refresh_callback Set window refresh callback
+// set_refresh_callback sets the window refresh callback
 pub fn (w &Window) set_refresh_callback(cb FnWindowRefresh) FnWindowRefresh {
 	prev := C.glfwSetWindowRefreshCallback(w.data, cb)
 	check_error()
 	return prev
 }
 
-// set_focus_callback Set window focus callback
+// set_focus_callback sets the window focus callback
 pub fn (w &Window) set_focus_callback(cb FnWindowFocus) FnWindowFocus {
 	prev := C.glfwSetWindowFocusCallback(w.data, cb)
 	check_error()
 	return prev
 }
 
-// set_iconify_callback Set window iconify callback
+// set_iconify_callback sets the window iconify callback
 pub fn (w &Window) set_iconify_callback(cb FnWindowIconify) FnWindowIconify {
 	prev := C.glfwSetWindowIconifyCallback(w.data, cb)
 	check_error()
 	return prev
 }
 
-// set_maximize_callback Set window maximize callback
+// set_maximize_callback sets the window maximize callback
 pub fn (w &Window) set_maximize_callback(cb FnWindowMaximize) FnWindowMaximize {
 	prev := C.glfwSetWindowMaximizeCallback(w.data, cb)
 	check_error()
 	return prev
 }
 
-// set_framebuffer_size_callback Set framebuffer size callback
+// set_framebuffer_size_callback sets the framebuffer size changed callback
 pub fn (w &Window) set_framebuffer_size_callback(cb FnFramebufferSize) FnFramebufferSize {
 	prev := C.glfwSetFramebufferSizeCallback(w.data, cb)
 	check_error()
 	return prev
 }
 
-// set_content_scale_callback Set window content scale callback
+// set_content_scale_callback sets the window content scale callback
 pub fn (w &Window) set_content_scale_callback(cb FnWindowContentScale) FnWindowContentScale {
 	prev := C.glfwSetWindowContentScaleCallback(w.data, cb)
 	check_error()
 	return prev
 }
 
-// get_input_mode Get imput mode
+// get_input_mode return the window imput mode
 pub fn (w &Window) get_input_mode(mode int) int {
 	prev := C.glfwGetInputMode(w.data, mode)
 	check_error()
 	return prev
 }
 
-// set_input_mode Set input mode
+// set_input_mode sets the window input mode
 pub fn (w &Window) set_input_mode(mode, value int) {
 	C.glfwSetInputMode(w.data, mode, value)
 	check_error()
 }
 
-// get_key Get key
+// get_key returns the state of a key
 pub fn (w &Window) get_key(key int) int {
 	k := C.glfwGetKey(w.data, key)
 	check_error()
 	return k
 }
 
-// get_mouse_button Get mouse button
+// get_mouse_button returns the state of a mouse button
 pub fn (w &Window) get_mouse_button(button int) int {
 	s := C.glfwGetMouseButton(w.data, button)
 	check_error()
 	return s
 }
 
-// get_cursor_position Get mouse cursor position
+// get_cursor_position returns the current position of the mouse cursor
 pub fn (w &Window) get_cursor_position() Position {
 	pos := Position{}
 	C.glfwGetCursorPos(w.data, &pos.x, &pos.y)
@@ -462,94 +460,94 @@ pub fn (w &Window) get_cursor_position() Position {
 	return pos
 }
 
-// set_cursor_position Set cursor position
+// set_cursor_position places the cursor at the specified position
 pub fn (w &Window) set_cursor_position(x, y f64) {
 	C.glfwSetCursorPos(w.data, x, y)
 	check_error()
 }
 
-// set_cursor Set cursor
+// set_cursor sets cursor
 pub fn (w &Window) set_cursor(cursor &Cursor) {
 	C.glfwSetCursor(w.data, cursor.data)
 	check_error()
 }
 
-// set_key_callback Set key callback
+// set_key_callback sets the window key callback
 pub fn (w &Window) set_key_callback(cb FnKey) FnKey {
 	prev := C.glfwSetKeyCallback(w.data, cb)
 	check_error()
 	return prev
 }
 
-// set_char_callback Set char callback
+// set_char_callback sets the widnow char (Unicode) callback
 pub fn (w &Window) set_char_callback(cb FnChar) FnChar {
 	prev := C.glfwSetCharCallback(w.data, cb)
 	check_error()
 	return prev
 }
 
-// set_char_mods_callback Set char mods callback
+// set_char_mods_callback sets the window char mods callback
 pub fn (w &Window) set_char_mods_callback(cb FnCharMods) FnCharMods {
 	prev := C.glfwSetCharModsCallback(w.data, cb)
 	check_error()
 	return prev
 }
 
-// set_mouse_button_callback Set mouse button callback
+// set_mouse_button_callback sets the mouse button callback
 pub fn (w &Window) set_mouse_button_callback(cb FnMouseButton) FnMouseButton {
 	prev := C.glfwSetMouseButtonCallback(w.data, cb)
 	check_error()
 	return prev
 }
 
-// set_cursor_position_callback Set cursor position callback
+// set_cursor_position_callback sets the cursor position callback
 pub fn (w &Window) set_cursor_position_callback(cb FnCursorPos) FnCursorPos {
 	prev := C.glfwSetCursorPosCallback(w.data, cb)
 	check_error()
 	return prev
 }
 
-// set_cursor_enter_callback Set cursor enter callback
+// set_cursor_enter_callback sets the cursor enter callback
 pub fn (w &Window) set_cursor_enter_callback(cb FnCursorEnter) FnCursorEnter {
 	prev := C.glfwSetCursorEnterCallback(w.data, cb)
 	check_error()
 	return prev
 }
 
-// set_scroll_callback Set scroll callback
+// set_scroll_callback sets the scroll callback
 pub fn (w &Window) set_scroll_callback(cb FnScroll) FnScroll {
 	prev := C.glfwSetScrollCallback(w.data, cb)
 	check_error()
 	return prev
 }
 
-// set_drop_callback Set drop callback
+// set_drop_callback sets the drop callback
 pub fn (w &Window) set_drop_callback(cb FnDrop) FnDrop {
 	prev := C.glfwSetDropCallback(w.data, cb)
 	check_error()
 	return prev
 }
 
-// set_clipboard_string Set clipboard string
+// set_clipboard_string sets the clipboard string
 pub fn (w &Window) set_clipboard_string(clipboard string) {
 	C.glfwSetClipboardString(w.data, clipboard.str)
 	check_error()
 }
 
-// set_clipboard_string Get clipboard string
+// set_clipboard_string returns the clipboard string
 pub fn (w &Window) get_clipboard_string() string {
 	c := tos3(C.glfwGetClipboardString(w.data))
 	check_error()
 	return c
 }
 
-// swap_buffers Swap buffers
+// swap_buffers swaps the front and back buffers
 pub fn (w &Window) swap_buffers() {
 	C.glfwSwapBuffers(w.data)
 	check_error()
 }
 
-// make_context_current Make context current
+// make_context_current makes the window's context current
 pub fn (w &Window) make_context_current() {
 	C.glfwMakeContextCurrent(w.data)
 	check_error()

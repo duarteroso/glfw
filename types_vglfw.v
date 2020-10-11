@@ -1,27 +1,27 @@
 module vglfw
 
-// Position GLFW position
+// Position
 pub struct Position {
 pub mut:
 	x int
 	y int
 }
 
-// Scale GLFW scale
+// Scale
 pub struct Scale {
 pub mut:
 	x f32
 	y f32
 }
 
-// Size GLFW size
+// Size
 pub struct Size {
 pub mut:
 	width  int
 	height int
 }
 
-// Rect Window rectagle
+// Rect represents the dimensions of a Window
 pub struct Rect {
 pub mut:
 	left   int
@@ -30,14 +30,14 @@ pub mut:
 	bottom int
 }
 
-// Error GLFW error
+// Error includes a code and a message
 pub struct Error {
 pub mut:
 	code int
 	msg  string
 }
 
-// code_str Return error code as string
+// code_str returns the error code as string
 pub fn (err &Error) code_str() string {
 	return match err.code {
 		glfw_no_error            { 'GLFW_NO_ERROR' }
@@ -54,7 +54,7 @@ pub fn (err &Error) code_str() string {
 	}
 }
 
-// str Return error as string
+// str converts the error to a string
 pub fn (err &Error) str() string {
 	return '${err.code_str()} - ${err.msg}'
 }

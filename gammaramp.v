@@ -1,8 +1,5 @@
 module vglfw
 
-// C headers
-#include "gammaramp.h"
-
 // Forward declaration
 [typedef] struct C.GLFWgammaramp { }
 
@@ -14,7 +11,7 @@ fn C.vglfwGetGammaRampRGBBit(gr &C.GLFWgammaramp, r, g, b &u16)
 
 fn C.vglfwCreateGammaRamp(size u32, r, g, b &u16) &C.GLFWgammaramp
 
-// Gamma ramp of monitor
+// GammaRamp values of a monitor
 pub struct GammaRamp {
 pub mut:
 	size  int
@@ -23,12 +20,10 @@ pub mut:
 	blue  []u16
 }
 
-// create_gammaramp Create GammaRamp instance
-pub fn create_gammaramp(data voidptr) &GammaRamp {
-	raw_data := &C.GLFWgammaramp(data)
-	//
+// create_gammaramp creates a GammaRamp instance
+pub fn create_gammaramp(data &C.GLFWgammaramp) &GammaRamp {
 	size := u32(0)
-	C.vglfwGetGammaRampSize(raw_data, &size)
+	C.vglfwGetGammaRampSize(data, &size)
 	//
 	gr := &GammaRamp{
 		size: int(size)
@@ -37,11 +32,11 @@ pub fn create_gammaramp(data voidptr) &GammaRamp {
 		blue: []u16{len: int(size)}
 	}
 	//
-	C.vglfwGetGammaRampRGBBits(raw_data, &gr.red.data, &gr.green.data, &gr.blue.data)
+	C.vglfwGetGammaRampRGBBits(data, &gr.red.data, &gr.green.data, &gr.blue.data)
 	return gr
 }
 
-// get_raw Convert to GLFWgammaramp
+// get_raw returns the internal data
 fn (gr &GammaRamp) get_raw() &C.GLFWgammaramp {
 	return C.vglfwCreateGammaRamp(gr.size, &gr.red, &gr.green, &gr.blue)
 }

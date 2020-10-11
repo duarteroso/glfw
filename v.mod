@@ -1,6 +1,6 @@
 Module {
 	name: 'vglfw',
 	description: 'GLFW wrapper in V',
-	version: '0.2.1',
+	version: '0.2.2',
 	dependencies: [duarteroso.vsemver]
 }
