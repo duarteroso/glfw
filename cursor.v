@@ -1,7 +1,9 @@
 module vglfw
 
 // Forward declaration
-[typedef] struct C.GLFWcursor { }
+[typedef]
+struct C.GLFWcursor {
+}
 
 fn C.glfwCreateCursor(image &C.GLFWimage, x_hot int, y_hot int) &C.GLFWcursor
 
@@ -9,7 +11,7 @@ fn C.glfwCreateStandardCursor(shape int) &C.GLFWcursor
 
 fn C.glfwDestroyCursor(cursor &C.GLFWcursor)
 
-// Cursor wraps the functionality of GLFWcursor 
+// Cursor wraps the functionality of GLFWcursor
 pub struct Cursor {
 mut:
 	data &C.GLFWcursor = &C.GLFWcursor(0)

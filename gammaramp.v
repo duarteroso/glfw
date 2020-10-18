@@ -1,7 +1,9 @@
 module vglfw
 
 // Forward declaration
-[typedef] struct C.GLFWgammaramp { }
+[typedef]
+struct C.GLFWgammaramp {
+}
 
 fn C.vglfwGetGammaRampSize(gr &C.GLFWgammaramp, size &u32)
 

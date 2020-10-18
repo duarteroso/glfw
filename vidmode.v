@@ -1,7 +1,9 @@
 module vglfw
 
-// Forward declaration 
-[typedef] struct C.GLFWvidmode { }
+// Forward declaration
+[typedef]
+struct C.GLFWvidmode {
+}
 
 // Helper methods to handle GLFWvidmode
 fn C.vglfwGetVidModeSize(vidmode &C.GLFWvidmode, width &int, height &int)

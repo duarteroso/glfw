@@ -1,7 +1,9 @@
 module vglfw
 
 // Forward declaration
-[typedef] struct C.GLFWgamepadstate { }
+[typedef]
+struct C.GLFWgamepadstate {
+}
 
 fn C.glfwJoystickPresent(jid int) int
 
@@ -61,7 +63,7 @@ pub fn (j &Joystick) get_axes() []f64 {
 	check_error()
 	//
 	axes := []f64{len: count}
-	unsafe { C.memcpy(axes.data, data, count) }
+	unsafe {C.memcpy(axes.data, data, count)}
 	return axes
 }
 
@@ -72,7 +74,7 @@ pub fn (j &Joystick) get_buttons() []byte {
 	check_error()
 	//
 	btns := []byte{len: count}
-	unsafe { C.memcpy(btns.data, voidptr(data), count) }
+	unsafe {C.memcpy(btns.data, voidptr(data), count)}
 	return btns
 }
 
@@ -83,7 +85,7 @@ pub fn (j &Joystick) get_hats() []byte {
 	check_error()
 	//
 	hats := []byte{len: count}
-	unsafe { C.memcpy(hats.data, voidptr(data), count) }
+	unsafe {C.memcpy(hats.data, voidptr(data), count)}
 	return hats
 }
 

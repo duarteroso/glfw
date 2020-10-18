@@ -1,7 +1,9 @@
 module vglfw
 
 // Forward declaration
-[typedef] struct C.GLFWmonitor { }
+[typedef]
+struct C.GLFWmonitor {
+}
 
 fn C.glfwGetMonitorPos(monitor &C.GLFWmonitor, x_pos &int, y_pos &int)
 
@@ -27,7 +29,7 @@ fn C.glfwGetGammaRamp(monitor &C.GLFWmonitor) &C.GLFWgammaramp
 
 fn C.glfwSetGammaRamp(monitor &C.GLFWmonitor, ramp &C.GLFWgammaramp)
 
-// Monitor wraps the functionality of GLFWmonitor 
+// Monitor wraps the functionality of GLFWmonitor
 pub struct Monitor {
 mut:
 	data &C.GLFWmonitor = &C.GLFWmonitor(0)
@@ -114,7 +116,9 @@ pub fn (m &Monitor) get_video_modes() []VideoMode {
 	//
 	mut v_modes := []VideoMode{len: count}
 	for idx := 0; idx < count; idx++ {
-		unsafe { v_modes[idx] = create_vidmode(&c_modes[idx]) }
+		unsafe {
+			v_modes[idx] = create_vidmode(&c_modes[idx])
+		}
 	}
 	//
 	return v_modes

@@ -1,7 +1,9 @@
 module vglfw
 
 // Forward declaration
-[typedef] struct C.GLFWwindow { }
+[typedef]
+struct C.GLFWwindow {
+}
 
 fn C.glfwCreateWindow(width int, height int, title charptr, monitor &C.GLFWmonitor, share &C.GLFWwindow) &C.GLFWwindow
 
@@ -119,7 +121,7 @@ fn C.glfwSwapBuffers(window &C.GLFWwindow)
 
 fn C.glfwMakeContextCurrent(window &C.GLFWwindow)
 
-// Window wraps the functionality of GLFWwindow 
+// Window wraps the functionality of GLFWwindow
 pub struct Window {
 mut:
 	data &C.GLFWwindow = &C.GLFWwindow(0)
@@ -152,7 +154,8 @@ pub fn create_window_desc(desc WindowDesc, monitor &Monitor, share &Window) &Win
 		window_data = share.data
 	}
 	//
-	raw_data := C.glfwCreateWindow(desc.size.width, desc.size.height, desc.title.str, monitor_data, window_data)
+	raw_data := C.glfwCreateWindow(desc.size.width, desc.size.height, desc.title.str,
+		monitor_data, window_data)
 	check_error()
 	//
 	return create_window(raw_data)
@@ -329,10 +332,8 @@ pub fn (w &Window) set_monitor(monitor &Monitor, desc MonitorDesc) {
 		monitor_data = monitor.data
 	}
 	//
-	C.glfwSetWindowMonitor(	w.data, monitor_data, 
-							desc.pos.x, desc.pos.y, 
-							desc.size.width, desc.size.height,
-							desc.refresh_rate)
+	C.glfwSetWindowMonitor(w.data, monitor_data, desc.pos.x, desc.pos.y, desc.size.width,
+		desc.size.height, desc.refresh_rate)
 	check_error()
 }
 

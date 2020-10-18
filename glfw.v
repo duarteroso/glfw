@@ -104,7 +104,7 @@ pub fn get_version_string() string {
 }
 
 // get_error gets the current unhandled GLFW error.
-// Should be call after each GLFW method that can 
+// Should be call after each GLFW method that can
 // produce an error.
 pub fn get_error() Error {
 	mut m := charptr(''.str)
@@ -114,8 +114,7 @@ pub fn get_error() Error {
 		code: c
 		msg: if c == glfw_no_error {
 			''
-		}
-		else {
+		} else {
 			tos3(m)
 		}
 	}
@@ -127,7 +126,7 @@ pub fn check_error() {
 	if err.code != glfw_no_error {
 		panic(err.str())
 	}
-} 
+}
 
 // set_error_callback sets error callback
 pub fn set_error_callback(cb FnError) FnError {
@@ -142,7 +141,9 @@ pub fn get_monitors() []&Monitor {
 	//
 	mut v_monitors := []&Monitor{len: count}
 	for idx := 0; idx < count; idx++ {
-		unsafe { v_monitors[idx].data = c_monitors[idx] }
+		unsafe {
+			v_monitors[idx].data = c_monitors[idx]
+		}
 	}
 	return v_monitors
 }
@@ -299,7 +300,9 @@ pub fn get_required_instance_extensions() []string {
 	//
 	mut exts := []string{len: int(count)}
 	for i := 0; i < count; i++ {
-		unsafe { exts[i] = tos3(data[i]) }
+		unsafe {
+			exts[i] = tos3(data[i])
+		}
 	}
 	//
 	return exts

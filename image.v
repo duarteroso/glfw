@@ -1,11 +1,13 @@
 module vglfw
 
 // Forward declaration
-[typedef] struct C.GLFWimage { }
+[typedef]
+struct C.GLFWimage {
+}
 
 fn C.vglfwCreateImage(width int, height int, pixels charptr) voidptr
 
-// image wraps the functionality of GLFWimage 
+// image wraps the functionality of GLFWimage
 pub struct Image {
 mut:
 	data &C.GLFWimage = &C.GLFWimage(0)
