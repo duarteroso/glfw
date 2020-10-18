@@ -3,7 +3,7 @@ module vglfw
 // Forward declaration
 [typedef] struct C.GLFWwindow { }
 
-fn C.glfwCreateWindow(width, height int, title charptr, monitor &C.GLFWmonitor, share &C.GLFWwindow) &C.GLFWwindow
+fn C.glfwCreateWindow(width int, height int, title charptr, monitor &C.GLFWmonitor, share &C.GLFWwindow) &C.GLFWwindow
 
 fn C.glfwDestroyWindow(window &C.GLFWwindow)
 
@@ -15,23 +15,23 @@ fn C.glfwSetWindowTitle(window &C.GLFWwindow, title charptr)
 
 fn C.glfwSetWindowIcon(window &C.GLFWwindow, count int, images voidptr)
 
-fn C.glfwGetWindowPos(window &C.GLFWwindow, xpos, y_pos &int)
+fn C.glfwGetWindowPos(window &C.GLFWwindow, x_pos &int, y_pos &int)
 
-fn C.glfwSetWindowPos(window &C.GLFWwindow, xpos, ypos int)
+fn C.glfwSetWindowPos(window &C.GLFWwindow, x_pos int, y_pos int)
 
-fn C.glfwGetWindowSize(window &C.GLFWwindow, width, height &int)
+fn C.glfwGetWindowSize(window &C.GLFWwindow, width &int, height &int)
 
-fn C.glfwSetWindowSize(window &C.GLFWwindow, width, height int)
+fn C.glfwSetWindowSize(window &C.GLFWwindow, width int, height int)
 
-fn C.glfwSetWindowSizeLimits(window &C.GLFWwindow, minwidth, minheight, maxwidth, maxheight int)
+fn C.glfwSetWindowSizeLimits(window &C.GLFWwindow, minwidth int, minheight int, maxwidth int, maxheight int)
 
-fn C.glfwSetWindowAspectRatio(window &C.GLFWwindow, numer, denom int)
+fn C.glfwSetWindowAspectRatio(window &C.GLFWwindow, numer int, denom int)
 
-fn C.glfwGetFramebufferSize(window &C.GLFWwindow, width, height &int)
+fn C.glfwGetFramebufferSize(window &C.GLFWwindow, width &int, height &int)
 
-fn C.glfwGetWindowFrameSize(window &C.GLFWwindow, left, top, right, bottom &int)
+fn C.glfwGetWindowFrameSize(window &C.GLFWwindow, left &int, top &int, right &int, bottom &int)
 
-fn C.glfwGetWindowContentScale(window &C.GLFWwindow, x_scale, y_scale &f32)
+fn C.glfwGetWindowContentScale(window &C.GLFWwindow, x_scale &f32, y_scale &f32)
 
 fn C.glfwGetWindowOpacity(window &C.GLFWwindow) f32
 
@@ -53,11 +53,11 @@ fn C.glfwRequestWindowAttention(window &C.GLFWwindow)
 
 fn C.glfwGetWindowMonitor(window &C.GLFWwindow) &C.GLFWmonitor
 
-fn C.glfwSetWindowMonitor(window &C.GLFWwindow, monitor &C.GLFWmonitor, x_pos, y_pos, width, height, refreshRate int)
+fn C.glfwSetWindowMonitor(window &C.GLFWwindow, monitor &C.GLFWmonitor, x_pos int, y_pos int, width int, height int, refreshRate int)
 
 fn C.glfwGetWindowAttrib(window &C.GLFWwindow, attrib int) int
 
-fn C.glfwSetWindowAttrib(window &C.GLFWwindow, attrib, value int)
+fn C.glfwSetWindowAttrib(window &C.GLFWwindow, attrib int, value int)
 
 fn C.glfwSetWindowUserPointer(window &C.GLFWwindow, pointer voidptr)
 
@@ -83,15 +83,15 @@ fn C.glfwSetWindowContentScaleCallback(window &C.GLFWwindow, callback FnWindowCo
 
 fn C.glfwGetInputMode(window &C.GLFWwindow, mode int) int
 
-fn C.glfwSetInputMode(window &C.GLFWwindow, mode, value int)
+fn C.glfwSetInputMode(window &C.GLFWwindow, mode int, value int)
 
 fn C.glfwGetKey(window &C.GLFWwindow, key int) int
 
 fn C.glfwGetMouseButton(window &C.GLFWwindow, button int) int
 
-fn C.glfwGetCursorPos(window &C.GLFWwindow, x_pos, y_pos &f64)
+fn C.glfwGetCursorPos(window &C.GLFWwindow, x_pos &f64, y_pos &f64)
 
-fn C.glfwSetCursorPos(window &C.GLFWwindow, x_pos, y_pos f64)
+fn C.glfwSetCursorPos(window &C.GLFWwindow, x_pos f64, y_pos f64)
 
 fn C.glfwSetCursor(window &C.GLFWwindow, cursor &C.GLFWcursor)
 
@@ -199,7 +199,7 @@ pub fn (w &Window) get_position() Position {
 }
 
 // set_position sets the window position
-pub fn (w &Window) set_position(x, y int) {
+pub fn (w &Window) set_position(x int, y int) {
 	C.glfwSetWindowPos(w.data, x, y)
 	check_error()
 }
@@ -213,19 +213,19 @@ pub fn (w &Window) get_size() Size {
 }
 
 // set_size sets the window size
-pub fn (w &Window) set_size(width, height int) {
+pub fn (w &Window) set_size(width int, height int) {
 	C.glfwSetWindowSize(w.data, width, height)
 	check_error()
 }
 
 // set_size_limits Set window size limits
-pub fn (w &Window) set_size_limits(min, max Size) {
+pub fn (w &Window) set_size_limits(min Size, max Size) {
 	C.glfwSetWindowSizeLimits(w.data, min.width, min.height, max.width, max.height)
 	check_error()
 }
 
 // set_aspect_ratio sets the window aspect ratio
-pub fn (w &Window) set_aspect_ratio(numerator, denominator int) {
+pub fn (w &Window) set_aspect_ratio(numerator int, denominator int) {
 	C.glfwSetWindowAspectRatio(w.data, numerator, denominator)
 	check_error()
 }
@@ -344,7 +344,7 @@ pub fn (w &Window) get_attribute(attrib int) int {
 }
 
 // set_attribute writes an attribute of the window
-pub fn (w &Window) set_attribute(attrib, value int) {
+pub fn (w &Window) set_attribute(attrib int, value int) {
 	C.glfwSetWindowAttrib(w.data, attrib, value)
 	check_error()
 }
@@ -433,7 +433,7 @@ pub fn (w &Window) get_input_mode(mode int) int {
 }
 
 // set_input_mode sets the window input mode
-pub fn (w &Window) set_input_mode(mode, value int) {
+pub fn (w &Window) set_input_mode(mode int, value int) {
 	C.glfwSetInputMode(w.data, mode, value)
 	check_error()
 }
@@ -461,7 +461,7 @@ pub fn (w &Window) get_cursor_position() Position {
 }
 
 // set_cursor_position places the cursor at the specified position
-pub fn (w &Window) set_cursor_position(x, y f64) {
+pub fn (w &Window) set_cursor_position(x f64, y f64) {
 	C.glfwSetCursorPos(w.data, x, y)
 	check_error()
 }

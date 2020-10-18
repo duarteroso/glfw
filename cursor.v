@@ -3,7 +3,7 @@ module vglfw
 // Forward declaration
 [typedef] struct C.GLFWcursor { }
 
-fn C.glfwCreateCursor(image &C.GLFWimage, x_hot, y_hot int) &C.GLFWcursor
+fn C.glfwCreateCursor(image &C.GLFWimage, x_hot int, y_hot int) &C.GLFWcursor
 
 fn C.glfwCreateStandardCursor(shape int) &C.GLFWcursor
 
@@ -23,7 +23,7 @@ pub fn create_cursor(data voidptr) &Cursor {
 }
 
 // create_cursor_with_image creates a Cursor instance from an Image
-pub fn create_cursor_with_image(image &Image, x, y int) &Cursor {
+pub fn create_cursor_with_image(image &Image, x int, y int) &Cursor {
 	raw_data := C.glfwCreateCursor(image.data, x, y)
 	check_error()
 	return create_cursor(raw_data)

@@ -3,13 +3,13 @@ module vglfw
 // Forward declaration
 [typedef] struct C.GLFWmonitor { }
 
-fn C.glfwGetMonitorPos(monitor &C.GLFWmonitor, x_pos, y_pos &int)
+fn C.glfwGetMonitorPos(monitor &C.GLFWmonitor, x_pos &int, y_pos &int)
 
-fn C.glfwGetMonitorWorkarea(monitor &C.GLFWmonitor, x_pos, y_pos, width, height &int)
+fn C.glfwGetMonitorWorkarea(monitor &C.GLFWmonitor, x_pos &int, y_pos &int, width &int, height &int)
 
-fn C.glfwGetMonitorPhysicalSize(monitor &C.GLFWmonitor, widthMM, heightMM &int)
+fn C.glfwGetMonitorPhysicalSize(monitor &C.GLFWmonitor, widthMM &int, heightMM &int)
 
-fn C.glfwGetMonitorContentScale(monitor &C.GLFWmonitor, x_scale, y_scale &f32)
+fn C.glfwGetMonitorContentScale(monitor &C.GLFWmonitor, x_scale &f32, y_scale &f32)
 
 fn C.glfwGetMonitorName(monitor &C.GLFWmonitor) charptr
 

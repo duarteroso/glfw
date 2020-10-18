@@ -5,11 +5,11 @@ module vglfw
 
 fn C.vglfwGetGammaRampSize(gr &C.GLFWgammaramp, size &u32)
 
-fn C.vglfwGetGammaRampRGBBits(gr &C.GLFWgammaramp, r, g, b &u16)
+fn C.vglfwGetGammaRampRGBBits(gr &C.GLFWgammaramp, r &u16, g &u16, b &u16)
 
-fn C.vglfwGetGammaRampRGBBit(gr &C.GLFWgammaramp, r, g, b &u16)
+fn C.vglfwGetGammaRampRGBBit(gr &C.GLFWgammaramp, r &u16, g &u16, b &u16)
 
-fn C.vglfwCreateGammaRamp(size u32, r, g, b &u16) &C.GLFWgammaramp
+fn C.vglfwCreateGammaRamp(size u32, r &u16, g &u16, b &u16) &C.GLFWgammaramp
 
 // GammaRamp values of a monitor
 pub struct GammaRamp {

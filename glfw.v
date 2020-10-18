@@ -7,9 +7,9 @@ fn C.glfwInit() int
 
 fn C.glfwTerminate()
 
-fn C.glfwInitHint(hint, value int)
+fn C.glfwInitHint(hint int, value int)
 
-fn C.glfwGetVersion(major, minor, rev &int)
+fn C.glfwGetVersion(major &int, minor &int, rev &int)
 
 fn C.glfwGetVersionString() charptr
 
@@ -25,7 +25,7 @@ fn C.glfwSetMonitorCallback(callback FnMonitor) FnMonitor
 
 fn C.glfwDefaultWindowHints()
 
-fn C.glfwWindowHint(hint, value int)
+fn C.glfwWindowHint(hint int, value int)
 
 fn C.glfwWindowHintString(hint int, value charptr)
 
@@ -39,7 +39,7 @@ fn C.glfwPostEmptyEvent()
 
 fn C.glfwRawMouseMotionSupported() int
 
-fn C.glfwGetKeyName(key, scan_code int) charptr
+fn C.glfwGetKeyName(key int, scan_code int) charptr
 
 fn C.glfwGetKeyScancode(key int) int
 
@@ -81,13 +81,13 @@ pub fn terminate() {
 }
 
 // init_hint writes hint for the initialization process
-pub fn init_hint(hint, value int) {
+pub fn init_hint(hint int, value int) {
 	C.glfwInitHint(hint, value)
 	check_error()
 }
 
 // get_version gets the current GLFW version
-pub fn get_version(major, minor, rev &int) {
+pub fn get_version(major &int, minor &int, rev &int) {
 	C.glfwGetVersion(major, minor, rev)
 }
 
@@ -173,7 +173,7 @@ pub fn default_window_hints() {
 }
 
 // window_hint sets window hint
-pub fn window_hint(hint, value int) {
+pub fn window_hint(hint int, value int) {
 	C.glfwWindowHint(hint, value)
 	check_error()
 }
@@ -216,7 +216,7 @@ pub fn is_raw_mouse_motion_supported() bool {
 }
 
 // get_key_name returns a key name
-pub fn get_key_name(key, scan_code int) string {
+pub fn get_key_name(key int, scan_code int) string {
 	n := C.glfwGetKeyName(key, scan_code)
 	check_error()
 	return tos3(n)

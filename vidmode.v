@@ -4,9 +4,9 @@ module vglfw
 [typedef] struct C.GLFWvidmode { }
 
 // Helper methods to handle GLFWvidmode
-fn C.vglfwGetVidModeSize(vidmode &C.GLFWvidmode, width, height &int)
+fn C.vglfwGetVidModeSize(vidmode &C.GLFWvidmode, width &int, height &int)
 
-fn C.vglfwGetVidModeRGBBits(vidmode &C.GLFWvidmode, r, g, b &int)
+fn C.vglfwGetVidModeRGBBits(vidmode &C.GLFWvidmode, r &int, g &int, b &int)
 
 fn C.vglfwGetVidModeRefreshRate(vidmode &C.GLFWvidmode, rate &int)
 
