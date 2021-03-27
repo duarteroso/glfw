@@ -11,7 +11,7 @@ fn C.vglfwGetGammaRampRGBBits(gr &C.GLFWgammaramp, r &u16, g &u16, b &u16)
 
 fn C.vglfwGetGammaRampRGBBit(gr &C.GLFWgammaramp, r &u16, g &u16, b &u16)
 
-fn C.vglfwCreateGammaRamp(size u32, r &u16, g &u16, b &u16) &C.GLFWgammaramp
+fn C.vglfwCreateGammaRamp(gr &C.GLFWgammaramp, size u32, r &u16, g &u16, b &u16) &C.GLFWgammaramp
 
 // GammaRamp values of a monitor
 pub struct GammaRamp {
@@ -40,5 +40,7 @@ pub fn create_gammaramp(data &C.GLFWgammaramp) &GammaRamp {
 
 // get_raw returns the internal data
 fn (gr &GammaRamp) get_raw() &C.GLFWgammaramp {
-	return C.vglfwCreateGammaRamp(gr.size, &gr.red, &gr.green, &gr.blue)
+	ramp := &C.GLFWgammaramp(0)
+	C.vglfwCreateGammaRamp(ramp, gr.size, &gr.red.data, &gr.green.data, &gr.blue.data)
+	return ramp
 }

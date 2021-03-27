@@ -51,8 +51,6 @@ fn C.glfwGetTimerValue() u64
 
 fn C.glfwGetTimerFrequency() u64
 
-fn C.glfwGetCurrentContext() &C.GLFWwindow
-
 fn C.glfwSwapInterval(interval int)
 
 fn C.glfwExtensionSupported(extension charptr) int
@@ -63,7 +61,7 @@ fn C.glfwVulkanSupported() int
 
 fn C.glfwGetRequiredInstanceExtensions(count &u32) &charptr
 
-fn C.glfwSetJoystickCallback(FnJoystick callback) FnJoystick
+fn C.glfwSetJoystickCallback(callback FnJoystick) FnJoystick
 
 fn C.glfwUpdateGamepadMappings(mappings charptr) int
 
@@ -100,23 +98,19 @@ pub fn get_semantic_version() vsemver.SemVer {
 
 // get_version_string gets the current GLFW version as string
 pub fn get_version_string() string {
-	return tos3(C.glfwGetVersionString())
+	return unsafe { tos3(C.glfwGetVersionString()) }
 }
 
 // get_error gets the current unhandled GLFW error.
 // Should be call after each GLFW method that can
 // produce an error.
-pub fn get_error() Error {
+pub fn get_error() Err {
 	mut m := charptr(''.str)
 	c := C.glfwGetError(&m)
 	//
-	return Error{
+	return Err{
 		code: c
-		msg: if c == glfw_no_error {
-			''
-		} else {
-			tos3(m)
-		}
+		msg: if c == glfw_no_error { '' } else { unsafe { tos3(m) } }
 	}
 }
 
@@ -220,7 +214,7 @@ pub fn is_raw_mouse_motion_supported() bool {
 pub fn get_key_name(key int, scan_code int) string {
 	n := C.glfwGetKeyName(key, scan_code)
 	check_error()
-	return tos3(n)
+	return unsafe { tos3(n) }
 }
 
 // get_key_scan_code gets a key scan code
@@ -256,13 +250,6 @@ pub fn get_timer_frequency() u64 {
 	f := C.glfwGetTimerFrequency()
 	check_error()
 	return f
-}
-
-// get_current_context returns the current context
-pub fn get_current_context() &Window {
-	raw_data := C.glfwGetCurrentContext()
-	check_error()
-	return create_window(raw_data)
 }
 
 // swap_interval sets an interval for the swap

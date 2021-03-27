@@ -63,7 +63,7 @@ pub fn (j &Joystick) get_axes() []f64 {
 	check_error()
 	//
 	axes := []f64{len: count}
-	unsafe {C.memcpy(axes.data, data, count)}
+	unsafe { C.memcpy(axes.data, data, count) }
 	return axes
 }
 
@@ -74,7 +74,7 @@ pub fn (j &Joystick) get_buttons() []byte {
 	check_error()
 	//
 	btns := []byte{len: count}
-	unsafe {C.memcpy(btns.data, voidptr(data), count)}
+	unsafe { C.memcpy(btns.data, voidptr(data), count) }
 	return btns
 }
 
@@ -85,7 +85,7 @@ pub fn (j &Joystick) get_hats() []byte {
 	check_error()
 	//
 	hats := []byte{len: count}
-	unsafe {C.memcpy(hats.data, voidptr(data), count)}
+	unsafe { C.memcpy(hats.data, voidptr(data), count) }
 	return hats
 }
 
@@ -93,14 +93,14 @@ pub fn (j &Joystick) get_hats() []byte {
 pub fn (j &Joystick) get_name() string {
 	n := C.glfwGetJoystickName(j.id)
 	check_error()
-	return tos3(n)
+	return unsafe { tos3(n) }
 }
 
 // get_uuid returns the joystick GUID
 pub fn (j &Joystick) get_uuid() string {
 	guid := C.glfwGetJoystickGUID(j.id)
 	check_error()
-	return tos3(guid)
+	return unsafe { tos3(guid) }
 }
 
 // set_user_pointer links user data to the joystick
@@ -120,7 +120,7 @@ pub fn (j &Joystick) get_user_pointer() voidptr {
 pub fn (j &Joystick) get_gamepad_name() string {
 	n := C.glfwGetGamepadName(j.id)
 	check_error()
-	return tos3(n)
+	return unsafe { tos3(n) }
 }
 
 // get_gamepad_state returns the gamepad state

@@ -121,6 +121,8 @@ fn C.glfwSwapBuffers(window &C.GLFWwindow)
 
 fn C.glfwMakeContextCurrent(window &C.GLFWwindow)
 
+fn C.glfwGetCurrentContext() &C.GLFWwindow
+
 // Window wraps the functionality of GLFWwindow
 pub struct Window {
 mut:
@@ -278,7 +280,7 @@ pub fn (w &Window) iconify() {
 
 // restore forces the windw to restore
 pub fn (w &Window) restore() {
-	C.glfwRestoreWindow(w)
+	C.glfwRestoreWindow(w.data)
 	check_error()
 }
 
@@ -357,8 +359,21 @@ pub fn (w &Window) set_user_pointer(pointer voidptr) {
 }
 
 // get_user_pointer returns the linked user data of the window
-pub fn (w &Window) get_user_pointer(pointer voidptr) voidptr {
+pub fn (w &Window) get_user_pointer() voidptr {
 	ptr := C.glfwGetWindowUserPointer(w.data)
+	check_error()
+	return ptr
+}
+
+// set_user_pointer links user data to a window
+pub fn set_user_pointer(data &C.GLFWwindow, pointer voidptr) {
+	C.glfwSetWindowUserPointer(data, pointer)
+	check_error()
+}
+
+// get_user_pointer returns the linked user data of a window
+pub fn get_user_pointer(data &C.GLFWwindow) voidptr {
+	ptr := C.glfwGetWindowUserPointer(data)
 	check_error()
 	return ptr
 }
@@ -372,7 +387,7 @@ pub fn (w &Window) set_position_callback(cb FnWindowPos) FnWindowPos {
 
 // get_size_callback sets the window size changed callback
 pub fn (w &Window) set_size_callback(cb FnWindowSize) FnWindowSize {
-	prev := C.glfwSetWindowSizeCallback(w, cb)
+	prev := C.glfwSetWindowSizeCallback(w.data, cb)
 	check_error()
 	return prev
 }
@@ -537,7 +552,7 @@ pub fn (w &Window) set_clipboard_string(clipboard string) {
 
 // set_clipboard_string returns the clipboard string
 pub fn (w &Window) get_clipboard_string() string {
-	c := tos3(C.glfwGetClipboardString(w.data))
+	c := unsafe { tos3(C.glfwGetClipboardString(w.data)) }
 	check_error()
 	return c
 }
@@ -552,4 +567,11 @@ pub fn (w &Window) swap_buffers() {
 pub fn (w &Window) make_context_current() {
 	C.glfwMakeContextCurrent(w.data)
 	check_error()
+}
+
+// get_current_context returns the current context
+pub fn get_current_context() &Window {
+	raw_data := C.glfwGetCurrentContext()
+	check_error()
+	return create_window(raw_data)
 }

@@ -4,7 +4,7 @@ import duarteroso.vsemver
 
 // Common
 #flag -I @VROOT/include
-#flag -DGLFW_INCLUDE_VULKAN=
+#flag -DGLFW_INCLUDE_VULKAN=1
 // Linux
 #flag linux -lglfw
 // C headers

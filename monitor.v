@@ -92,7 +92,7 @@ pub fn (m &Monitor) get_content_scale() Scale {
 pub fn (m &Monitor) get_name() string {
 	name := C.glfwGetMonitorName(m.data)
 	check_error()
-	return tos3(name)
+	return unsafe { tos3(name) }
 }
 
 // set_user_pointer links user data to the monitor
