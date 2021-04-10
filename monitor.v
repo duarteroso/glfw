@@ -13,7 +13,7 @@ fn C.glfwGetMonitorPhysicalSize(monitor &C.GLFWmonitor, widthMM &int, heightMM &
 
 fn C.glfwGetMonitorContentScale(monitor &C.GLFWmonitor, x_scale &f32, y_scale &f32)
 
-fn C.glfwGetMonitorName(monitor &C.GLFWmonitor) charptr
+fn C.glfwGetMonitorName(monitor &C.GLFWmonitor) &char
 
 fn C.glfwSetMonitorUserPointer(monitor &C.GLFWmonitor, pointer voidptr)
 
@@ -92,7 +92,7 @@ pub fn (m &Monitor) get_content_scale() Scale {
 pub fn (m &Monitor) get_name() string {
 	name := C.glfwGetMonitorName(m.data)
 	check_error()
-	return unsafe { tos3(name) }
+	return unsafe { name.vstring() }
 }
 
 // set_user_pointer links user data to the monitor

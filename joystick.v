@@ -11,23 +11,23 @@ fn C.glfwJoystickIsGamepad(jid int) int
 
 fn C.glfwGetJoystickAxes(jid int, count &int) voidptr
 
-fn C.glfwGetJoystickButtons(jid int, count &int) byteptr
+fn C.glfwGetJoystickButtons(jid int, count &int) &byte
 
-fn C.glfwGetJoystickHats(jid int, count &int) byteptr
+fn C.glfwGetJoystickHats(jid int, count &int) &byte
 
-fn C.glfwGetJoystickName(jid int) charptr
+fn C.glfwGetJoystickName(jid int) &char
 
-fn C.glfwGetJoystickGUID(jid int) charptr
+fn C.glfwGetJoystickGUID(jid int) &char
 
 fn C.glfwSetJoystickUserPointer(jid int, pointer voidptr)
 
 fn C.glfwGetJoystickUserPointer(jid int) voidptr
 
-fn C.glfwGetGamepadName(jid int) charptr
+fn C.glfwGetGamepadName(jid int) &char
 
 fn C.glfwGetGamepadState(jid int, state &C.GLFWgamepadstate) int
 
-fn C.vglfwGetGamepadState(jid int, buttons byteptr, axes voidptr) int
+fn C.vglfwGetGamepadState(jid int, buttons &byte, axes voidptr) int
 
 // Joystick represents a joystick by ID
 pub struct Joystick {
@@ -93,14 +93,14 @@ pub fn (j &Joystick) get_hats() []byte {
 pub fn (j &Joystick) get_name() string {
 	n := C.glfwGetJoystickName(j.id)
 	check_error()
-	return unsafe { tos3(n) }
+	return unsafe { n.vstring() }
 }
 
 // get_uuid returns the joystick GUID
 pub fn (j &Joystick) get_uuid() string {
 	guid := C.glfwGetJoystickGUID(j.id)
 	check_error()
-	return unsafe { tos3(guid) }
+	return unsafe { guid.vstring() }
 }
 
 // set_user_pointer links user data to the joystick
@@ -120,7 +120,7 @@ pub fn (j &Joystick) get_user_pointer() voidptr {
 pub fn (j &Joystick) get_gamepad_name() string {
 	n := C.glfwGetGamepadName(j.id)
 	check_error()
-	return unsafe { tos3(n) }
+	return unsafe { n.vstring() }
 }
 
 // get_gamepad_state returns the gamepad state

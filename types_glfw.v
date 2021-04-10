@@ -5,7 +5,7 @@ type FnGLProc = fn ()
 
 type FnVkProc = fn ()
 
-type FnError = fn (code int, err charptr)
+type FnError = fn (code int, err &char)
 
 type FnWindowPos = fn (window &C.GLFWwindow, x_pos int, y_pos int)
 
@@ -39,7 +39,7 @@ type FnChar = fn (window &C.GLFWwindow, unicode u32)
 
 type FnCharMods = fn (window &C.GLFWwindow, unicode u32, bit_field int)
 
-type FnDrop = fn (window &C.GLFWwindow, path_count int, paths &charptr)
+type FnDrop = fn (window &C.GLFWwindow, path_count int, paths &&char)
 
 type FnMonitor = fn (monitor voidptr, event int)
 

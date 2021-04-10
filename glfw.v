@@ -1,6 +1,6 @@
 module vglfw
 
-import duarteroso.vsemver
+import duarteroso.semver
 
 // Forward declaration
 fn C.glfwInit() int
@@ -11,9 +11,9 @@ fn C.glfwInitHint(hint int, value int)
 
 fn C.glfwGetVersion(major &int, minor &int, rev &int)
 
-fn C.glfwGetVersionString() charptr
+fn C.glfwGetVersionString() &char
 
-fn C.glfwGetError(description &charptr) int
+fn C.glfwGetError(description &&char) int
 
 fn C.glfwSetErrorCallback(callback FnError) FnError
 
@@ -27,7 +27,7 @@ fn C.glfwDefaultWindowHints()
 
 fn C.glfwWindowHint(hint int, value int)
 
-fn C.glfwWindowHintString(hint int, value charptr)
+fn C.glfwWindowHintString(hint int, value &char)
 
 fn C.glfwPollEvents()
 
@@ -39,7 +39,7 @@ fn C.glfwPostEmptyEvent()
 
 fn C.glfwRawMouseMotionSupported() int
 
-fn C.glfwGetKeyName(key int, scan_code int) charptr
+fn C.glfwGetKeyName(key int, scan_code int) &char
 
 fn C.glfwGetKeyScancode(key int) int
 
@@ -53,17 +53,17 @@ fn C.glfwGetTimerFrequency() u64
 
 fn C.glfwSwapInterval(interval int)
 
-fn C.glfwExtensionSupported(extension charptr) int
+fn C.glfwExtensionSupported(extension &char) int
 
-fn C.glfwGetProcAddress(procname charptr) FnGLProc
+fn C.glfwGetProcAddress(procname &char) FnGLProc
 
 fn C.glfwVulkanSupported() int
 
-fn C.glfwGetRequiredInstanceExtensions(count &u32) &charptr
+fn C.glfwGetRequiredInstanceExtensions(count &u32) &&char
 
 fn C.glfwSetJoystickCallback(callback FnJoystick) FnJoystick
 
-fn C.glfwUpdateGamepadMappings(mappings charptr) int
+fn C.glfwUpdateGamepadMappings(mappings &char) int
 
 // initialize GLFW
 pub fn initialize() bool {
@@ -90,27 +90,28 @@ pub fn get_version(major &int, minor &int, rev &int) {
 }
 
 // get_semantic_version gets the current GLFW semantic version
-pub fn get_semantic_version() vsemver.SemVer {
-	v := vsemver.SemVer{}
+pub fn get_semantic_version() semver.SemVer {
+	v := semver.SemVer{}
 	get_version(v.major, v.minor, v.patch)
 	return v
 }
 
 // get_version_string gets the current GLFW version as string
 pub fn get_version_string() string {
-	return unsafe { tos3(C.glfwGetVersionString()) }
+	s := C.glfwGetVersionString()
+	return unsafe { s.vstring() }
 }
 
 // get_error gets the current unhandled GLFW error.
 // Should be call after each GLFW method that can
 // produce an error.
 pub fn get_error() Err {
-	mut m := charptr(''.str)
+	mut m := &char(0)
 	c := C.glfwGetError(&m)
 	//
 	return Err{
 		code: c
-		msg: if c == glfw_no_error { '' } else { unsafe { tos3(m) } }
+		msg: if c == glfw_no_error { '' } else { unsafe { m.vstring() } }
 	}
 }
 
@@ -135,9 +136,7 @@ pub fn get_monitors() []&Monitor {
 	//
 	mut v_monitors := []&Monitor{len: count}
 	for idx := 0; idx < count; idx++ {
-		unsafe {
-			v_monitors[idx].data = c_monitors[idx]
-		}
+		v_monitors[idx].data = unsafe { c_monitors[idx] }
 	}
 	return v_monitors
 }
@@ -214,7 +213,7 @@ pub fn is_raw_mouse_motion_supported() bool {
 pub fn get_key_name(key int, scan_code int) string {
 	n := C.glfwGetKeyName(key, scan_code)
 	check_error()
-	return unsafe { tos3(n) }
+	return unsafe { n.vstring() }
 }
 
 // get_key_scan_code gets a key scan code
@@ -287,9 +286,7 @@ pub fn get_required_instance_extensions() []string {
 	//
 	mut exts := []string{len: int(count)}
 	for i := 0; i < count; i++ {
-		unsafe {
-			exts[i] = tos3(data[i])
-		}
+		exts[i] = unsafe { data[i].vstring() }
 	}
 	//
 	return exts

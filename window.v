@@ -5,7 +5,7 @@ module vglfw
 struct C.GLFWwindow {
 }
 
-fn C.glfwCreateWindow(width int, height int, title charptr, monitor &C.GLFWmonitor, share &C.GLFWwindow) &C.GLFWwindow
+fn C.glfwCreateWindow(width int, height int, title &char, monitor &C.GLFWmonitor, share &C.GLFWwindow) &C.GLFWwindow
 
 fn C.glfwDestroyWindow(window &C.GLFWwindow)
 
@@ -13,7 +13,7 @@ fn C.glfwWindowShouldClose(window &C.GLFWwindow) int
 
 fn C.glfwSetWindowShouldClose(window &C.GLFWwindow, value int)
 
-fn C.glfwSetWindowTitle(window &C.GLFWwindow, title charptr)
+fn C.glfwSetWindowTitle(window &C.GLFWwindow, title &char)
 
 fn C.glfwSetWindowIcon(window &C.GLFWwindow, count int, images voidptr)
 
@@ -113,9 +113,9 @@ fn C.glfwSetScrollCallback(window &C.GLFWwindow, callback FnScroll) FnScroll
 
 fn C.glfwSetDropCallback(window &C.GLFWwindow, callback FnDrop) FnDrop
 
-fn C.glfwSetClipboardString(window &C.GLFWwindow, clipboard charptr)
+fn C.glfwSetClipboardString(window &C.GLFWwindow, clipboard &char)
 
-fn C.glfwGetClipboardString(window &C.GLFWwindow) charptr
+fn C.glfwGetClipboardString(window &C.GLFWwindow) &char
 
 fn C.glfwSwapBuffers(window &C.GLFWwindow)
 
@@ -552,9 +552,9 @@ pub fn (w &Window) set_clipboard_string(clipboard string) {
 
 // set_clipboard_string returns the clipboard string
 pub fn (w &Window) get_clipboard_string() string {
-	c := unsafe { tos3(C.glfwGetClipboardString(w.data)) }
+	s := C.glfwGetClipboardString(w.data)
 	check_error()
-	return c
+	return unsafe { s.vstring() }
 }
 
 // swap_buffers swaps the front and back buffers

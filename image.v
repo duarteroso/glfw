@@ -5,7 +5,7 @@ module vglfw
 struct C.GLFWimage {
 }
 
-fn C.vglfwCreateImage(img &C.GLFWimage, width int, height int, pixels charptr) voidptr
+fn C.vglfwCreateImage(img &C.GLFWimage, width int, height int, pixels &char) voidptr
 
 // image wraps the functionality of GLFWimage
 pub struct Image {
