@@ -198,7 +198,7 @@ pub fn (w &Window) set_icon(images []Image) {
 // position gets the window position
 pub fn (w &Window) get_position() Position {
 	pos := Position{}
-	C.glfwGetWindowPos(w.data, &pos.x, &pos.y)
+	C.glfwGetWindowPos(w.data, &int(pos.x), &int(pos.y))
 	check_error()
 	return pos
 }

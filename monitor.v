@@ -58,7 +58,7 @@ pub fn (mut m Monitor) set_data(data &C.GLFWmonitor) {
 // get_pos returns the position of the monitor
 pub fn (m &Monitor) get_pos() Position {
 	pos := Position{}
-	C.glfwGetMonitorPos(m.data, &pos.x, &pos.y)
+	C.glfwGetMonitorPos(m.data, &int(pos.x), &int(pos.y))
 	check_error()
 	return pos
 }
@@ -67,7 +67,7 @@ pub fn (m &Monitor) get_pos() Position {
 pub fn (m &Monitor) get_workarea() (Position, Size) {
 	pos := Position{}
 	size := Size{}
-	C.glfwGetMonitorWorkarea(m.data, &pos.x, &pos.y, &size.width, &size.height)
+	C.glfwGetMonitorWorkarea(m.data, &int(pos.x), &int(pos.y), &size.width, &size.height)
 	check_error()
 	return pos, size
 }
