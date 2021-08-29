@@ -45,14 +45,18 @@ pub mut:
 
 // create_monitor creates a Monitor instance from raw data
 pub fn create_monitor(data &C.GLFWmonitor) &Monitor {
-	return &Monitor{
-		data: data
+	unsafe {
+		return &Monitor{
+			data: data
+		}
 	}
 }
 
 // set_data links data to a monitor
 pub fn (mut m Monitor) set_data(data &C.GLFWmonitor) {
-	m.data = data
+	unsafe {
+		m.data = data
+	}
 }
 
 // get_pos returns the position of the monitor

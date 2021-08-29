@@ -138,8 +138,10 @@ pub mut:
 
 // create_window creates a Window from raw data
 pub fn create_window(data &C.GLFWwindow) &Window {
-	return &Window{
-		data: data
+	unsafe {
+		return &Window{
+			data: data
+		}
 	}
 }
 

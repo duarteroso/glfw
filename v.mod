@@ -4,6 +4,6 @@ Module {
 	description: 'GLFW wrapper in V'
 	dependencies: [duarteroso.semver]
 	license: 'BSD-2-Clause'
-	repo_url: 'https://github.com/novuloj/vglfw'
+	repo_url: 'https://github.com/duarteroso/vglfw'
 	author: 'duarteroso'
 }
