@@ -147,7 +147,7 @@ pub fn (m &Monitor) get_gamma_ramp() &GammaRamp {
 	raw_data := C.glfwGetGammaRamp(m.data)
 	check_error()
 	//
-	if raw_data == &C.GLFWgammaramp(0) {
+	if isnil(raw_data) {
 		return &GammaRamp(0)
 	}
 	//
