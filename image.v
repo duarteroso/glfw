@@ -15,7 +15,7 @@ mut:
 
 // create_image creates an Image instance
 pub fn create_image(width int, height int, pixels []byte) &Image {
-	img := &C.GLFWimage(0)
+	img := &C.GLFWimage{}
 	C.vglfwCreateImage(img, width, height, pixels.str().str)
 	return &Image{
 		data: img

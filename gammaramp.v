@@ -40,7 +40,7 @@ pub fn create_gammaramp(data &C.GLFWgammaramp) &GammaRamp {
 
 // get_raw returns the internal data
 fn (gr &GammaRamp) get_raw() &C.GLFWgammaramp {
-	ramp := &C.GLFWgammaramp(0)
+	ramp := &C.GLFWgammaramp{}
 	C.vglfwCreateGammaRamp(ramp, gr.size, &gr.red.data, &gr.green.data, &gr.blue.data)
 	return ramp
 }
