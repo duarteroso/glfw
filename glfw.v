@@ -134,11 +134,13 @@ pub fn get_monitors() []&Monitor {
 	c_monitors := C.glfwGetMonitors(&count)
 	check_error()
 	//
-	mut v_monitors := []&Monitor{len: count}
-	for idx := 0; idx < count; idx++ {
-		v_monitors[idx].data = unsafe { c_monitors[idx] }
+	unsafe {
+		mut v_monitors := []&Monitor{len: count}
+		for idx := 0; idx < count; idx++ {
+			v_monitors[idx].data = c_monitors[idx]
+		}
+		return v_monitors
 	}
-	return v_monitors
 }
 
 // get_primary_monitor returns the primary monitor
