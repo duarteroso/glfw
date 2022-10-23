@@ -1,11 +1,11 @@
-module vglfw
+module glfw
 
 // Forward declaration
 [typedef]
 struct C.GLFWimage {
 }
 
-fn C.vglfwCreateImage(img &C.GLFWimage, width int, height int, pixels &char) voidptr
+fn C.glfwCreateImage(img &C.GLFWimage, width int, height int, pixels &char) voidptr
 
 // image wraps the functionality of GLFWimage
 pub struct Image {
@@ -16,7 +16,7 @@ mut:
 // create_image creates an Image instance
 pub fn create_image(width int, height int, pixels []byte) &Image {
 	img := &C.GLFWimage{}
-	C.vglfwCreateImage(img, width, height, pixels.str().str)
+	C.glfwCreateImage(img, width, height, pixels.str().str)
 	return &Image{
 		data: img
 	}

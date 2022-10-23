@@ -1,7 +1,7 @@
 #include <GLFW/glfw3.h>
 #include <string.h>
 
-int vglfwGetGamepadState(int id, unsigned char *buttons, double *axes)
+int glfwGetGamepadState(int id, unsigned char *buttons, double *axes)
 {
     GLFWgamepadstate state;
     if (glfwGetGamepadState(id, &state) == GLFW_FALSE)

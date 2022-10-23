@@ -1,4 +1,4 @@
-module vglfw
+module glfw
 
 // Forward declaration
 [typedef]
@@ -27,7 +27,7 @@ fn C.glfwGetGamepadName(jid int) &char
 
 fn C.glfwGetGamepadState(jid int, state &C.GLFWgamepadstate) int
 
-fn C.vglfwGetGamepadState(jid int, buttons &byte, axes voidptr) int
+fn C.glfwGetGamepadState(jid int, buttons &byte, axes voidptr) int
 
 // Joystick represents a joystick by ID
 pub struct Joystick {
@@ -125,7 +125,7 @@ pub fn (j &Joystick) get_gamepad_name() string {
 
 // get_gamepad_state returns the gamepad state
 pub fn (j &Joystick) get_gamepad_state(buttons [15]byte, axes [6]f64) bool {
-	ok := C.vglfwGetGamepadState(j.id, &buttons, &axes)
+	ok := C.glfwGetGamepadState(j.id, &buttons[0], &axes)
 	check_error()
 	return ok == glfw_true
 }

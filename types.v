@@ -1,4 +1,4 @@
-module vglfw
+module glfw
 
 // Position
 pub struct Position {
