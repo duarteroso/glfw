@@ -1,7 +1,7 @@
 #include <GLFW/glfw3.h>
 #include <string.h>
 
-void glfwCreateImage(GLFWimage *img, int width, int height, unsigned char *pixels)
+void glfwCreateImageHelper(GLFWimage *img, int width, int height, uint8_t *pixels)
 {
     img->width = width;
     img->height = height;

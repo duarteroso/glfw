@@ -6,11 +6,11 @@ struct C.GLFWvidmode {
 }
 
 // Helper methods to handle GLFWvidmode
-fn C.glfwGetVidModeSize(vidmode &C.GLFWvidmode, width &int, height &int)
+fn C.glfwGetVidModeSizeHelper(vidmode &C.GLFWvidmode, width &int, height &int)
 
-fn C.glfwGetVidModeRGBBits(vidmode &C.GLFWvidmode, r &int, g &int, b &int)
+fn C.glfwGetVidModeRGBBitsHelper(vidmode &C.GLFWvidmode, r &int, g &int, b &int)
 
-fn C.glfwGetVidModeRefreshRate(vidmode &C.GLFWvidmode, rate &int)
+fn C.glfwGetVidModeRefreshRateHelper(vidmode &C.GLFWvidmode, rate &int)
 
 // VideoMode represents the video mode of a monitor
 pub struct VideoMode {
@@ -27,8 +27,8 @@ pub:
 pub fn create_vidmode(data voidptr) VideoMode {
 	raw_data := &C.GLFWvidmode(data)
 	v := VideoMode{}
-	C.glfwGetVidModeSize(raw_data, &v.width, &v.height)
-	C.glfwGetVidModeRGBBits(raw_data, &v.red_bits, &v.green_bits, &v.blue_bits)
-	C.glfwGetVidModeRefreshRate(raw_data, &v.refresh_rate)
+	C.glfwGetVidModeSizeHelper(raw_data, &v.width, &v.height)
+	C.glfwGetVidModeRGBBitsHelper(raw_data, &v.red_bits, &v.green_bits, &v.blue_bits)
+	C.glfwGetVidModeRefreshRateHelper(raw_data, &v.refresh_rate)
 	return v
 }

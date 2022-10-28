@@ -7,6 +7,28 @@ pub mut:
 	msg  string
 }
 
+// create_error creates an error with code and message.
+fn create_error(code int, msg string) Err {
+	return Err{
+		code: code
+		msg: msg
+	}
+}
+
+// check_error will throw an error if there is any unhandled GLFW error
+// Should be call after each GLFW method that can produce an error.
+pub fn check_error() ! {
+	mut m := &char(0)
+	code := C.glfwGetError(&m)
+	if code == glfw_no_error {
+		return
+	}
+	//
+	msg := unsafe { cstring_to_vstring(m) }
+	err := create_error(code, msg)
+	return error(err.str())
+}
+
 // code_str returns the error code as string
 pub fn (err &Err) code_str() string {
 	return match err.code {

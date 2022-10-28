@@ -3,9 +3,13 @@ module glfw
 import duarteroso.semver
 import v.vmod
 
+$if !linux {
+	$compile_error("Only Linux is currently supported")
+}
+
 // manifest of module
-pub fn manifest() ?vmod.Manifest {
-	return vmod.decode(@VMOD_FILE)
+pub fn manifest() !vmod.Manifest {
+	return vmod.decode(@VMOD_FILE) or { err }
 }
 
 // glfw_version return the GLFW semantic version

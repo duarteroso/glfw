@@ -4,7 +4,7 @@
 			"path": "."
 		},
 		{
-			"path": "/usr/include/GLFW"
+			"path": "../../../../../usr/include/GLFW"
 		}
 	],
 	"settings": {}

@@ -4,7 +4,7 @@ module glfw
 pub const (
 	glfw_version_major    = 3
 	glfw_version_minor    = 3
-	glfw_version_revision = 2
+	glfw_version_revision = 8
 	//
 	glfw_true             = 1
 	glfw_false            = 0
