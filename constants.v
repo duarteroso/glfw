@@ -1,4 +1,4 @@
-module glfw
+module vglfw
 
 // GLFW defines
 pub const (

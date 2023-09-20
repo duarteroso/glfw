@@ -1,4 +1,4 @@
-module glfw
+module vglfw
 
 #flag linux -I/usr/include/GLFW
 #flag linux -I@VROOT/include

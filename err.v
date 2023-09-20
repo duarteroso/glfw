@@ -1,4 +1,4 @@
-module glfw
+module vglfw
 
 // Err includes a error code and an error message
 pub struct Err {
@@ -48,5 +48,5 @@ pub fn (err &Err) code_str() string {
 
 // str converts the error to a string
 pub fn (err &Err) str() string {
-	return '$err.code_str() - $err.msg'
+	return '${err.code_str()} - ${err.msg}'
 }

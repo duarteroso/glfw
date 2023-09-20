@@ -1,4 +1,4 @@
-module glfw
+module vglfw
 
 fn test_basic() {
 	test := fn () ! {}

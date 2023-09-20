@@ -1,4 +1,4 @@
-## glfw
+## vGLFW
 
 ### Description
 GLFW bindings for the V language.
@@ -17,7 +17,7 @@ Also some of the functions are struct-oriented so you do `window.<function>` whi
 ```v
 module main
 
-import glfw
+import duarteroso.vglfw as glfw
 
 fn main() {
 	//initialize the GLFW (name conversion causing init() isn't available at V)
@@ -52,11 +52,11 @@ fn main() {
 
 ```
 
-#### with Callbacks and App{} struct (get data from Callback to the Main/Struct):
+#### With Callbacks and App{} struct (get data from Callback to the Main/Struct):
 ```v
 module main
 
-import glfw
+import duarteroso.vglfw as glfw
 import time
 
 //create a App struct

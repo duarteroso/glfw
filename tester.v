@@ -1,4 +1,4 @@
-module glfw
+module vglfw
 
 type AnonOptionFun = fn () !
 
