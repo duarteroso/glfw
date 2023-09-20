@@ -150,12 +150,12 @@ pub fn create_window(data &C.GLFWwindow) &Window {
 
 // create_window_desc creates a window from a description
 pub fn create_window_desc(desc WindowDesc, monitor &Monitor, share &Window) !&Window {
-	mut monitor_data := &C.GLFWmonitor(0)
+	mut monitor_data := &C.GLFWmonitor(unsafe { 0 })
 	// Has monitor data
 	if !isnil(monitor) {
 		monitor_data = monitor.data
 	}
-	mut window_data := &C.GLFWwindow(0)
+	mut window_data := &C.GLFWwindow(unsafe { 0 })
 	// Has shared window
 	if !isnil(share) {
 		window_data = share.data
@@ -172,7 +172,7 @@ pub fn create_window_desc(desc WindowDesc, monitor &Monitor, share &Window) !&Wi
 pub fn (mut w Window) destroy_window() ! {
 	C.glfwDestroyWindow(w.data)
 	check_error()!
-	w.data = &C.GLFWwindow(0)
+	w.data = &C.GLFWwindow(unsafe { 0 })
 }
 
 // should_close returns true if window is closing
