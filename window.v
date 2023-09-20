@@ -129,7 +129,7 @@ fn C.glfwGetCurrentContext() &C.GLFWwindow
 // Window wraps the functionality of GLFWwindow
 pub struct Window {
 mut:
-	data &C.GLFWwindow = &C.GLFWwindow(0)
+	data &C.GLFWwindow = &C.GLFWwindow(unsafe { 0 })
 }
 
 // WindowDesc describes the basic properties of a window
@@ -326,7 +326,7 @@ pub fn (w &Window) get_monitor() !&Monitor {
 	check_error()!
 	//
 	if isnil(raw_data) {
-		return &Monitor(0)
+		return &Monitor(unsafe { 0 })
 	}
 	//
 	return create_monitor(raw_data)
@@ -334,7 +334,7 @@ pub fn (w &Window) get_monitor() !&Monitor {
 
 // set_monitor link a Monitor to the window
 pub fn (w &Window) set_monitor(monitor &Monitor, desc MonitorDesc) ! {
-	mut monitor_data := &C.GLFWmonitor(0)
+	mut monitor_data := &C.GLFWmonitor(unsafe { 0 })
 	if !isnil(monitor) {
 		monitor_data = monitor.data
 	}
