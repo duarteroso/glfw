@@ -1,10 +1,10 @@
 module glfw
 
-import duarteroso.semver
+import semver
 import v.vmod
 
 $if !linux {
-	$compile_error("Only Linux is currently supported")
+	$compile_error('Only Linux is currently supported')
 }
 
 // manifest of module
@@ -13,8 +13,8 @@ pub fn manifest() !vmod.Manifest {
 }
 
 // glfw_version return the GLFW semantic version
-pub fn glfw_version() semver.SemVer {
-	return semver.SemVer{
+pub fn glfw_version() semver.Version {
+	return semver.Version{
 		major: glfw_version_major
 		minor: glfw_version_minor
 		patch: glfw_version_revision
