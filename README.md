@@ -10,7 +10,7 @@ Please follow the official [GLFW documentation](https://www.glfw.org/documentati
 Also some of the functions are struct-oriented so you do `window.<function>` which is different from C.
 
 ### Install
-`v install duarteroso.glfw`
+`v install duarteroso.vglfw`
 
 ### Basic Usage
 #### Simple example:
