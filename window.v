@@ -5,6 +5,9 @@ module glfw
 struct C.GLFWwindow {
 }
 
+// For easier reference usage in Callback Handling
+pub type GLFWwindow = C.GLFWwindow
+
 fn C.glfwCreateWindow(width int, height int, title &char, monitor &C.GLFWmonitor, share &C.GLFWwindow) &C.GLFWwindow
 
 fn C.glfwDestroyWindow(window &C.GLFWwindow)
