@@ -10,7 +10,7 @@ fn C.glfwCreateImageHelper(img &C.GLFWimage, width int, height int, pixels &u8) 
 // image wraps the functionality of GLFWimage
 pub struct Image {
 mut:
-	data &C.GLFWimage = &C.GLFWimage(0)
+	data &C.GLFWimage = &C.GLFWimage(unsafe { 0 })
 }
 
 // create_image creates an Image instance
