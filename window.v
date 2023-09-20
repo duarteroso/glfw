@@ -580,3 +580,10 @@ pub fn get_current_context() !&Window {
 	check_error()!
 	return create_window(raw_data)
 }
+
+// get_window_context_helper get the original C-context instead of the converted V glfw.Window{}
+pub fn get_window_context_helper(window &Window) &C.GLFWwindow {
+	unsafe {
+		return window.data
+	}
+}
