@@ -103,8 +103,8 @@ fn main() {
 		//now print the data (which could come from callback) from the app struct and remove it afterwards
 		for i, s in app.share_data {
 			println(s)
-			app.share_data.delete(i)
 		}
+        app.share_data = []
 
 		//poll for events like mouse clicks, key, etc
 		glfw.poll_events()!
