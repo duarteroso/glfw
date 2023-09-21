@@ -1,4 +1,4 @@
-module glfw
+module vglfw
 
 // Forward declaration
 [typedef]
@@ -32,7 +32,7 @@ fn C.glfwSetGammaRamp(monitor &C.GLFWmonitor, ramp &C.GLFWgammaramp)
 // Monitor wraps the functionality of GLFWmonitor
 pub struct Monitor {
 mut:
-	data &C.GLFWmonitor = &C.GLFWmonitor(0)
+	data &C.GLFWmonitor = &C.GLFWmonitor(unsafe { 0 })
 }
 
 // MonitorDesc describes the basic properties of a Monitor
@@ -148,7 +148,7 @@ pub fn (m &Monitor) get_gamma_ramp() !&GammaRamp {
 	check_error()!
 	//
 	if isnil(raw_data) {
-		return &GammaRamp(0)
+		return &GammaRamp(unsafe { 0 })
 	}
 	//
 	gr := create_gammaramp(raw_data)

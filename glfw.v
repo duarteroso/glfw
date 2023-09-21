@@ -1,6 +1,6 @@
-module glfw
+module vglfw
 
-import duarteroso.semver
+import semver
 
 // Forward declaration
 fn C.glfwInit() int
@@ -92,9 +92,9 @@ pub fn get_version() (int, int, int) {
 }
 
 // get_semantic_version gets the current GLFW semantic version
-pub fn get_semantic_version() semver.SemVer {
+pub fn get_semantic_version() semver.Version {
 	major, minor, rev := get_version()
-	v := semver.SemVer{
+	v := semver.Version{
 		major: major
 		minor: minor
 		patch: rev

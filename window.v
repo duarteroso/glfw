@@ -1,9 +1,12 @@
-module glfw
+module vglfw
 
 // Forward declaration
 [typedef]
 struct C.GLFWwindow {
 }
+
+// For easier reference usage in Callback Handling
+pub type GLFWwindow = C.GLFWwindow
 
 fn C.glfwCreateWindow(width int, height int, title &char, monitor &C.GLFWmonitor, share &C.GLFWwindow) &C.GLFWwindow
 
@@ -126,7 +129,7 @@ fn C.glfwGetCurrentContext() &C.GLFWwindow
 // Window wraps the functionality of GLFWwindow
 pub struct Window {
 mut:
-	data &C.GLFWwindow = &C.GLFWwindow(0)
+	data &C.GLFWwindow = &C.GLFWwindow(unsafe { 0 })
 }
 
 // WindowDesc describes the basic properties of a window
@@ -147,12 +150,12 @@ pub fn create_window(data &C.GLFWwindow) &Window {
 
 // create_window_desc creates a window from a description
 pub fn create_window_desc(desc WindowDesc, monitor &Monitor, share &Window) !&Window {
-	mut monitor_data := &C.GLFWmonitor(0)
+	mut monitor_data := &C.GLFWmonitor(unsafe { 0 })
 	// Has monitor data
 	if !isnil(monitor) {
 		monitor_data = monitor.data
 	}
-	mut window_data := &C.GLFWwindow(0)
+	mut window_data := &C.GLFWwindow(unsafe { 0 })
 	// Has shared window
 	if !isnil(share) {
 		window_data = share.data
@@ -169,7 +172,7 @@ pub fn create_window_desc(desc WindowDesc, monitor &Monitor, share &Window) !&Wi
 pub fn (mut w Window) destroy_window() ! {
 	C.glfwDestroyWindow(w.data)
 	check_error()!
-	w.data = &C.GLFWwindow(0)
+	w.data = &C.GLFWwindow(unsafe { 0 })
 }
 
 // should_close returns true if window is closing
@@ -323,7 +326,7 @@ pub fn (w &Window) get_monitor() !&Monitor {
 	check_error()!
 	//
 	if isnil(raw_data) {
-		return &Monitor(0)
+		return &Monitor(unsafe { 0 })
 	}
 	//
 	return create_monitor(raw_data)
@@ -331,7 +334,7 @@ pub fn (w &Window) get_monitor() !&Monitor {
 
 // set_monitor link a Monitor to the window
 pub fn (w &Window) set_monitor(monitor &Monitor, desc MonitorDesc) ! {
-	mut monitor_data := &C.GLFWmonitor(0)
+	mut monitor_data := &C.GLFWmonitor(unsafe { 0 })
 	if !isnil(monitor) {
 		monitor_data = monitor.data
 	}
@@ -576,4 +579,11 @@ pub fn get_current_context() !&Window {
 	raw_data := C.glfwGetCurrentContext()
 	check_error()!
 	return create_window(raw_data)
+}
+
+// get_window_context_helper get the original C-context instead of the converted V glfw.Window{}
+pub fn get_window_context_helper(window &Window) &C.GLFWwindow {
+	unsafe {
+		return window.data
+	}
 }
