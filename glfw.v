@@ -252,9 +252,8 @@ pub fn is_extension_supported(extension string) !bool {
 }
 
 // get_proc_address returns the process address
-pub fn get_proc_address(proc_name string) !FnGLProc {
-	adr := C.glfwGetProcAddress(proc_name.str)
-	check_error()!
+pub fn get_proc_address(c &char) FnGLProc {
+	mut adr := C.glfwGetProcAddress(c)
 	return adr
 }
 

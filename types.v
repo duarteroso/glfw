@@ -31,7 +31,7 @@ pub mut:
 }
 
 // Function pointers
-type FnGLProc = fn ()
+type FnGLProc = fn (&char)
 
 type FnVkProc = fn ()
 
