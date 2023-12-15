@@ -1,7 +1,7 @@
 module vglfw
 
 // Forward declaration
-[typedef]
+@[typedef]
 struct C.GLFWmonitor {
 }
 
