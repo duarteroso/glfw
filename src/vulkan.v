@@ -13,7 +13,7 @@ type CVkPhysicalDevice = C.VkPhysicalDevice
 type CVkAllocationCallbacks = C.VkAllocationCallbacks
 type CVkSurfaceKHR = C.VkSurfaceKHR
 
-fn C.glfwGetInstanceProcAddress(instance C.VkInstance, procname charptr) FnVkProc
+fn C.glfwGetInstanceProcAddress(instance C.VkInstance, const_procname &char) FnVkProc
 fn C.glfwGetPhysicalDevicePresentationSupport(instance C.VkInstance, device C.VkPhysicalDevice, queuefamily u32) int
 fn C.glfwCreateWindowSurface(instance C.VkInstance, window &C.GLFWwindow, allocator &C.VkAllocationCallbacks, surface &VkSurfaceKHR) C.VkResult
 

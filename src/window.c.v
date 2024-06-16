@@ -5,11 +5,11 @@ module glfw
 struct C.GLFWwindow {
 }
 
-fn C.glfwCreateWindow(width int, height int, title &char, monitor &C.GLFWmonitor, share &C.GLFWwindow) &C.GLFWwindow
+fn C.glfwCreateWindow(width int, height int, const_title &char, monitor &C.GLFWmonitor, share &C.GLFWwindow) &C.GLFWwindow
 fn C.glfwDestroyWindow(window &C.GLFWwindow)
 fn C.glfwWindowShouldClose(window &C.GLFWwindow) int
 fn C.glfwSetWindowShouldClose(window &C.GLFWwindow, value int)
-fn C.glfwSetWindowTitle(window &C.GLFWwindow, title &char)
+fn C.glfwSetWindowTitle(window &C.GLFWwindow,const_title &char)
 fn C.glfwSetWindowIcon(window &C.GLFWwindow, count int, images voidptr)
 fn C.glfwGetWindowPos(window &C.GLFWwindow, x_pos &int, y_pos &int)
 fn C.glfwSetWindowPos(window &C.GLFWwindow, x_pos int, y_pos int)
@@ -59,7 +59,7 @@ fn C.glfwSetCursorPosCallback(window &C.GLFWwindow, callback FnCursorPos) FnCurs
 fn C.glfwSetCursorEnterCallback(window &C.GLFWwindow, callback FnCursorEnter) FnCursorEnter
 fn C.glfwSetScrollCallback(window &C.GLFWwindow, callback FnScroll) FnScroll
 fn C.glfwSetDropCallback(window &C.GLFWwindow, callback FnDrop) FnDrop
-fn C.glfwSetClipboardString(window &C.GLFWwindow, clipboard &char)
+fn C.glfwSetClipboardString(window &C.GLFWwindow, const_clipboard &char)
 fn C.glfwGetClipboardString(window &C.GLFWwindow) &char
 fn C.glfwSwapBuffers(window &C.GLFWwindow)
 fn C.glfwMakeContextCurrent(window &C.GLFWwindow)
