@@ -1,33 +1,4 @@
-module vglfw
-
-// Forward declaration
-@[typedef]
-struct C.GLFWmonitor {
-}
-
-fn C.glfwGetMonitorPos(monitor &C.GLFWmonitor, x_pos &int, y_pos &int)
-
-fn C.glfwGetMonitorWorkarea(monitor &C.GLFWmonitor, x_pos &int, y_pos &int, width &int, height &int)
-
-fn C.glfwGetMonitorPhysicalSize(monitor &C.GLFWmonitor, widthMM &int, heightMM &int)
-
-fn C.glfwGetMonitorContentScale(monitor &C.GLFWmonitor, x_scale &f32, y_scale &f32)
-
-fn C.glfwGetMonitorName(monitor &C.GLFWmonitor) &char
-
-fn C.glfwSetMonitorUserPointer(monitor &C.GLFWmonitor, pointer voidptr)
-
-fn C.glfwGetMonitorUserPointer(monitor &C.GLFWmonitor) voidptr
-
-fn C.glfwGetVideoModes(monitor &C.GLFWmonitor, count &int) &C.GLFWvidmode
-
-fn C.glfwGetVideoMode(monitor &C.GLFWmonitor) &C.GLFWvidmode
-
-fn C.glfwSetGamma(monitor &C.GLFWmonitor, gamma f32)
-
-fn C.glfwGetGammaRamp(monitor &C.GLFWmonitor) &C.GLFWgammaramp
-
-fn C.glfwSetGammaRamp(monitor &C.GLFWmonitor, ramp &C.GLFWgammaramp)
+module glfw
 
 // Monitor wraps the functionality of GLFWmonitor
 pub struct Monitor {
@@ -62,7 +33,7 @@ pub fn (mut m Monitor) set_data(data &C.GLFWmonitor) {
 // get_pos returns the position of the monitor
 pub fn (m &Monitor) get_pos() !Position {
 	pos := Position{}
-	C.glfwGetMonitorPos(m.data, &int(pos.x), &int(pos.y))
+	C.glfwGetMonitorPos(m.data, &pos.x, &pos.y)
 	check_error()!
 	return pos
 }
@@ -71,7 +42,7 @@ pub fn (m &Monitor) get_pos() !Position {
 pub fn (m &Monitor) get_workarea() !(Position, Size) {
 	pos := Position{}
 	size := Size{}
-	C.glfwGetMonitorWorkarea(m.data, &int(pos.x), &int(pos.y), &size.width, &size.height)
+	C.glfwGetMonitorWorkarea(m.data, &pos.x, &pos.y, &size.width, &size.height)
 	check_error()!
 	return pos, size
 }

@@ -1,4 +1,4 @@
-module vglfw
+module glfw
 
 import semver
 import v.vmod
@@ -10,9 +10,5 @@ pub fn manifest() !vmod.Manifest {
 
 // glfw_version return the GLFW semantic version
 pub fn glfw_version() semver.Version {
-	return semver.Version{
-		major: glfw_version_major
-		minor: glfw_version_minor
-		patch: glfw_version_revision
-	}
+	return semver.build(glfw_version_major, glfw_version_minor, glfw_version_revision)
 }

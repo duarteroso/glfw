@@ -1,4 +1,4 @@
-module vglfw
+module glfw
 
 type AnonOptionFun = fn () !
 
@@ -17,4 +17,16 @@ fn concrete_test(cb AnonOptionFun) ! {
 	initialize() or { panic(err) }
 	cb()!
 	terminate() or { panic(err) }
+}
+
+fn test_basic() {
+	test := fn () ! {}
+	do_test(test)
+}
+
+fn test_version() {
+	version := get_version()
+	assert version.major != 0
+	assert version.minor != 0
+	assert version.patch != 0
 }

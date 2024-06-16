@@ -1,12 +1,17 @@
-module vglfw
+module glfw
 
 // TODO
 /*
 // Forward declaration
-[typedef] struct C.VkInstance { }
-[typedef] struct C.VkPhysicalDevice { }
-[typedef] struct C.VkAllocationCallbacks { }
-[typedef] struct C.VkSurfaceKHR { }
+@[typedef] struct C.VkInstance { }
+@[typedef] struct C.VkPhysicalDevice { }
+@[typedef] struct C.VkAllocationCallbacks { }
+@[typedef] struct C.VkSurfaceKHR { }
+
+type CVkInstance = C.VkInstance
+type CVkPhysicalDevice = C.VkPhysicalDevice
+type CVkAllocationCallbacks = C.VkAllocationCallbacks
+type CVkSurfaceKHR = C.VkSurfaceKHR
 
 fn C.glfwGetInstanceProcAddress(instance C.VkInstance, procname charptr) FnVkProc
 fn C.glfwGetPhysicalDevicePresentationSupport(instance C.VkInstance, device C.VkPhysicalDevice, queuefamily u32) int

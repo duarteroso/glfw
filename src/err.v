@@ -1,4 +1,4 @@
-module vglfw
+module glfw
 
 // Err includes a error code and an error message
 pub struct Err {
