@@ -13,6 +13,7 @@ $if linux {
 $if macos {
 	#flag -I/usr/local/opt/glfw/include
 	#flag -I@VROOT/include
+	#flag -lglfw
 
 	#include "GLFW/glfw3.h"
 }
