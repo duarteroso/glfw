@@ -1,6 +1,6 @@
 Module {
 	name: 'glfw'
-	version: '0.2.3'
+	version: '3.4.0'
 	description: 'GLFW wrapper in V'
 	dependencies: []
 	license: 'BSD-2-Clause'
