@@ -26,7 +26,7 @@ fn test_basic() {
 
 fn test_version() {
 	version := get_version()
-	assert version.major != 0
-	assert version.minor != 0
-	assert version.patch != 0
+	assert version.major != glfw_dont_care
+	assert version.minor != glfw_dont_care
+	assert version.patch != glfw_dont_care
 }

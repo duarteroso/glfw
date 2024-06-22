@@ -23,7 +23,7 @@ pub fn init_hint(hint int, value int) ! {
 
 // get_version gets the current GLFW version
 pub fn get_version() semver.Version {
-	major, minor, patch := 0, 0, 0
+	major, minor, patch := glfw_dont_care, glfw_dont_care, glfw_dont_care
 	C.glfwGetVersion(&major, &minor, &patch)
 	v := semver.Version{
 		major: major
