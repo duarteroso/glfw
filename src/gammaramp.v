@@ -3,7 +3,7 @@ module glfw
 // GammaRamp values of a monitor
 pub struct GammaRamp {
 pub mut:
-	size  int
+	size  u32
 	red   []u16
 	green []u16
 	blue  []u16
@@ -11,14 +11,11 @@ pub mut:
 
 // create_gammaramp creates a GammaRamp instance
 pub fn create_gammaramp(data &C.GLFWgammaramp) &GammaRamp {
-	size := u32(0)
-	C.glfwGetGammaRampSizeHelper(data, &size)
-	//
 	gr := &GammaRamp{
-		size: int(size)
-		red: []u16{len: int(size)}
-		green: []u16{len: int(size)}
-		blue: []u16{len: int(size)}
+		size: data.size
+		red: []u16{len: int(data.size)}
+		green: []u16{len: int(data.size)}
+		blue: []u16{len: int(data.size)}
 	}
 	//
 	C.glfwGetGammaRampRGBBitsHelper(data, &gr.red.data, &gr.green.data, &gr.blue.data)
@@ -27,7 +24,11 @@ pub fn create_gammaramp(data &C.GLFWgammaramp) &GammaRamp {
 
 // get_raw returns the internal data
 fn (gr &GammaRamp) get_raw() &C.GLFWgammaramp {
-	ramp := &C.GLFWgammaramp{}
-	C.glfwCreateGammaRampHelper(ramp, gr.size, &gr.red.data, &gr.green.data, &gr.blue.data)
+	ramp := &C.GLFWgammaramp{
+		red: gr.red.data
+		green: gr.green.data
+		blue: gr.blue.data
+		size: gr.size
+	}
 	return ramp
 }
