@@ -9,5 +9,42 @@ struct C.GLFWgammaramp {
 	size  u32
 }
 
-fn C.glfwGetGammaRampRGBBitsHelper(gr &C.GLFWgammaramp, r &u16, g &u16, b &u16)
-fn C.glfwGetGammaRampRGBBitHelper(gr &C.GLFWgammaramp, index int, r &u16, g &u16, b &u16)
+pub fn (gamma &C.GLFWgammaramp) size() u32 {
+	return gamma.size
+}
+
+pub fn (gamma &C.GLFWgammaramp) red() []u16 {
+	mut red := []u16{len: int(gamma.size), init: u16(0)}
+	//
+	for idx in 0 .. int(gamma.size) {
+		unsafe {
+			red[idx] = gamma.red[idx]
+		}
+	}
+	//
+	return red
+}
+
+pub fn (gamma &C.GLFWgammaramp) green() []u16 {
+	mut green := []u16{len: int(gamma.size), init: u16(0)}
+	//
+	for idx in 0 .. int(gamma.size) {
+		unsafe {
+			green[idx] = gamma.green[idx]
+		}
+	}
+	//
+	return green
+}
+
+pub fn (gamma &C.GLFWgammaramp) blue() []u16 {
+	mut blue := []u16{len: int(gamma.size), init: u16(0)}
+	//
+	for idx in 0 .. int(gamma.size) {
+		unsafe {
+			blue[idx] = gamma.blue[idx]
+		}
+	}
+	//
+	return blue
+}

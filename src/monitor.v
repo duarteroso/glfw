@@ -115,19 +115,19 @@ pub fn (m &Monitor) set_gamma(gamma f32) ! {
 // get_gamma_ramp returns the GamaRamp instance of the monitor
 // Returns nil if GammaRamp is missing
 pub fn (m &Monitor) get_gamma_ramp() !&GammaRamp {
-	raw_data := C.glfwGetGammaRamp(m.data)
+	raw := C.glfwGetGammaRamp(m.data)
 	check_error()!
 	//
-	if isnil(raw_data) {
+	if isnil(raw) {
 		return &GammaRamp(unsafe { 0 })
 	}
 	//
-	gr := create_gammaramp(raw_data)
+	gr := create_gammaramp(raw.size, raw.red(), raw.green(), raw.blue())
 	return gr
 }
 
 // set_gamma_ramp sets the gamma ramp of the monitor
 pub fn (m &Monitor) set_gamma_ramp(gr GammaRamp) ! {
-	C.glfwSetGammaRamp(m.data, gr.get_raw())
+	C.glfwSetGammaRamp(m.data, gr.raw())
 	check_error()!
 }
