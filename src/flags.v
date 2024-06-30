@@ -26,5 +26,4 @@ $if windows {
 
 #include "gamepadstate.h"
 #include "gammaramp.h"
-#include "image.h"
 #include "vidmode.h"

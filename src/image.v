@@ -8,9 +8,29 @@ mut:
 
 // create_image creates an Image instance
 pub fn create_image(width int, height int, pixels []u8) &Image {
-	img := &C.GLFWimage{}
-	C.glfwCreateImageHelper(img, width, height, &pixels)
 	return &Image{
-		data: img
+		data: &C.GLFWimage{
+			width: width
+			height: height
+			pixels: pixels.data
+		}
 	}
+}
+
+pub fn (img &Image) width() int {
+	return img.data.width
+}
+
+pub fn (img &Image) height() int {
+	return img.data.height
+}
+
+pub fn (img &Image) pixels() []u8 {
+	mut value := []u8{len: img.width() * img.height()}
+	for idx in 0 .. img.width() * img.height() {
+		unsafe {
+			value[idx] = img.data.pixels[idx]
+		}
+	}
+	return value
 }
