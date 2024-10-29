@@ -1,4 +1,4 @@
-module glfw
+module wrapper
 
 // image wraps the functionality of GLFWimage
 pub struct Image {

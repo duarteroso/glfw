@@ -1,4 +1,4 @@
-module glfw
+module wrapper
 
 // Window wraps the functionality of GLFWwindow
 pub struct Window {

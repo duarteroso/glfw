@@ -1,4 +1,4 @@
-module glfw
+module wrapper
 
 // Joystick represents a joystick by ID
 pub struct Joystick {

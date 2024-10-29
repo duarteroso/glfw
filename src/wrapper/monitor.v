@@ -1,4 +1,4 @@
-module glfw
+module wrapper
 
 // Monitor wraps the functionality of GLFWmonitor
 pub struct Monitor {

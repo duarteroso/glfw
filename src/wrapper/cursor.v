@@ -1,4 +1,4 @@
-module glfw
+module wraper
 
 // Cursor wraps the functionality of GLFWcursor
 pub struct Cursor {

@@ -1,4 +1,4 @@
-module glfw
+module wrapper
 
 // TODO
 /*

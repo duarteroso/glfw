@@ -1,4 +1,4 @@
-module glfw
+module wrapper
 
 // VideoMode represents the video mode of a monitor
 pub struct VideoMode {

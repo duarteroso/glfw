@@ -1,4 +1,4 @@
-module glfw
+module wrapper
 
 // GammaRamp values of a monitor
 pub struct GammaRamp {
