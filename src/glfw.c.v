@@ -261,7 +261,7 @@ pub const glfw_accum_red_bits = 0x00021007
 pub const glfw_accum_green_bits = 0x00021008
 pub const glfw_accum_blue_bits = 0x00021009
 pub const glfw_accum_alpha_bits = 0x0002100A
-pub const glfw_aux_buffers = 0x0002100B
+pub const glfw_auxbuffers = 0x0002100B
 pub const glfw_stereo = 0x0002100C
 pub const glfw_samples = 0x0002100D
 pub const glfw_srgb_capable = 0x0002100E
@@ -588,7 +588,7 @@ pub fn C.glfwGetFramebufferSize(window &GLFWwindow, width &int, height &int)
 
 pub fn C.glfwGetWindowFrameSize(window &GLFWwindow, left &int, top &int, right &int, bottom &int)
 
-pub fn C.glfwGetWindowContentScale(window &GLFWwindow, x_scale &f32, y_scale &f32)
+pub fn C.glfwGetWindowContentScale(window &GLFWwindow, xscale &f32, yscale &f32)
 
 pub fn C.glfwGetWindowOpacity(window &GLFWwindow) f32
 
