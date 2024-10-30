@@ -7,7 +7,7 @@ GLFW bindngs for the V language.
 Please follow the official [GLFW documentation](https://www.glfw.org/documentation.html)
 
 ### Install
-`v install duarteroso.glfw`
+`v install https://github.com/duarteroso/glfw`
 
 ### Wrapper
 The wrapper around GLFW can be found in its own package [vGLFW](https://github.com/duarteroso/vglfw)
