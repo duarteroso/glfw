@@ -1,4 +1,4 @@
-# vGLFW
+# GLFW
 
 ## Description
 GLFW bindngs for the V language.
