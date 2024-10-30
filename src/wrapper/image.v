@@ -1,16 +1,18 @@
 module wrapper
 
+import glfw
+
 // image wraps the functionality of GLFWimage
 pub struct Image {
 mut:
-	data &C.GLFWimage = &C.GLFWimage(unsafe { 0 })
+	data &glfw.GLFWimage = &glfw.GLFWimage(unsafe { 0 })
 }
 
 // create_image creates an Image instance
 pub fn create_image(width int, height int, pixels []u8) &Image {
 	return &Image{
-		data: &C.GLFWimage{
-			width: width
+		data: &glfw.GLFWimage{
+			width:  width
 			height: height
 			pixels: pixels.data
 		}

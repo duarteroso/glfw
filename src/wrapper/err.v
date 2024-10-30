@@ -1,5 +1,7 @@
 module wrapper
 
+import glfw
+
 // Err includes a error code and an error message
 pub struct Err {
 pub mut:
@@ -11,7 +13,7 @@ pub mut:
 fn create_error(code int, msg string) Err {
 	return Err{
 		code: code
-		msg: msg
+		msg:  msg
 	}
 }
 
@@ -20,7 +22,7 @@ fn create_error(code int, msg string) Err {
 pub fn check_error() ! {
 	mut m := &char(0)
 	code := C.glfwGetError(&m)
-	if code == glfw_no_error {
+	if code == glfw.glfw_no_error {
 		return
 	}
 	//
@@ -32,16 +34,16 @@ pub fn check_error() ! {
 // code_str returns the error code as string
 pub fn (err &Err) code_str() string {
 	return match err.code {
-		glfw_no_error { 'GLFW_NO_ERROR' }
-		glfw_not_initialized { 'GLFW_NOT_INITIALIZED' }
-		glfw_no_current_context { 'GLFW_NO_CURRENT_CONTEXT' }
-		glfw_invalid_enum { 'GLFW_INVALID_ENUM' }
-		glfw_out_of_memory { 'GLFW_OUT_OF_MEMORY' }
-		glfw_api_unavailable { 'GLFW_API_UNAVAILABLE' }
-		glfw_version_unavailable { 'GLFW_VERION_UNAVAILABLE' }
-		glfw_platform_error { 'GLFW_PLATFORM_ERROR' }
-		glfw_format_unavailable { 'GLFW_FORMAT_UNAVAILABLE' }
-		glfw_no_window_context { 'GLFW_NO_WINDOW_CONTEXT' }
+		glfw.glfw_no_error { 'GLFW_NO_ERROR' }
+		glfw.glfw_not_initialized { 'GLFW_NOT_INITIALIZED' }
+		glfw.glfw_no_current_context { 'GLFW_NO_CURRENT_CONTEXT' }
+		glfw.glfw_invalid_enum { 'GLFW_INVALID_ENUM' }
+		glfw.glfw_out_of_memory { 'GLFW_OUT_OF_MEMORY' }
+		glfw.glfw_api_unavailable { 'GLFW_API_UNAVAILABLE' }
+		glfw.glfw_version_unavailable { 'GLFW_VERION_UNAVAILABLE' }
+		glfw.glfw_platform_error { 'GLFW_PLATFORM_ERROR' }
+		glfw.glfw_format_unavailable { 'GLFW_FORMAT_UNAVAILABLE' }
+		glfw.glfw_no_window_context { 'GLFW_NO_WINDOW_CONTEXT' }
 		else { 'UNHANDLED_ERROR' }
 	}
 }

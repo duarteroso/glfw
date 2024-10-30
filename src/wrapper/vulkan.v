@@ -15,12 +15,12 @@ type CVkSurfaceKHR = C.VkSurfaceKHR
 
 fn C.glfwGetInstanceProcAddress(instance C.VkInstance, const_procname &char) FnVkProc
 fn C.glfwGetPhysicalDevicePresentationSupport(instance C.VkInstance, device C.VkPhysicalDevice, queuefamily u32) int
-fn C.glfwCreateWindowSurface(instance C.VkInstance, window &C.GLFWwindow, allocator &C.VkAllocationCallbacks, surface &VkSurfaceKHR) C.VkResult
+fn C.glfwCreateWindowSurface(instance C.VkInstance, window &glfw.GLFWwindow, allocator &glfw.VkAllocationCallbacks, surface &VkSurfaceKHR) C.VkResult
 
 // Vulkan Wrapper for VkInstance
 pub struct Vulkan{
 mut:
-	data &C.VkInstance = &C.VkInstance(0)
+	data &glfw.VkInstance = &glfw.VkInstance(0)
 }
 
 // get_instance_proc_address Get Vulkan instance proc address
@@ -38,7 +38,7 @@ pub fn (v &Vulkan) get_physical_device_presentation_support(device C.VkPhysicalD
 }
 
 // create_window_surface Create Vulkan wndow surface
-pub fn (v &Vulkan) create_window_surface(window &Window, allocator &C.VkAllocationCallbacks, surface &C.VkSurfaceKHR)! C.VkResult {
+pub fn (v &Vulkan) create_window_surface(window &Window, allocator &glfw.VkAllocationCallbacks, surface &glfw.VkSurfaceKHR)! C.VkResult {
 	r := C.glfwCreateWindowSurface(*v.data, window.data, allocator, surface)
 	check_error()!
 	return r

@@ -1,5 +1,7 @@
 module wrapper
 
+import glfw
+
 // Joystick represents a joystick by ID
 pub struct Joystick {
 pub:
@@ -95,8 +97,13 @@ pub fn (j &Joystick) get_gamepad_name() !string {
 }
 
 // get_gamepad_state returns the gamepad state
-pub fn (j &Joystick) get_gamepad_state(buttons [15]u8, axes [6]f64) !bool {
-	ok := C.glfwGetGamepadStateHelper(j.id, &buttons[0], &axes)
+pub fn (j &Joystick) get_gamepad_state(buttons [15]u8, axes [6]f32) !bool {
+	mut state := glfw.GLFWgamepadstate{}
+	ok := C.glfwGetGamepadState(j.id, &state)
 	check_error()!
-	return ok == glfw_true
+	//
+	buttons = state.buttons.clone()
+	axes = state.axes.clone()
+	//
+	return ok == glfw.glfw_true
 }

@@ -380,68 +380,69 @@ type GLFWvkproc = fn ()
 struct C.GLFWmonitor {
 }
 
-type GLFWmonitor = C.GLFWmonitor
+pub type GLFWmonitor = C.GLFWmonitor
 
 @[typedef]
 struct C.GLFWwindow {
 }
 
-type GLFWwindow = C.GLFWwindow
+pub type GLFWwindow = C.GLFWwindow
 
 @[typedef]
 struct C.GLFWcursor {
 }
 
-type GLFWcursor = C.GLFWcursor
+pub type GLFWcursor = C.GLFWcursor
 
-type GLFWallocatefun = fn (size u64, user voidptr)
+pub type GLFWallocatefun = fn (size u64, user voidptr)
 
-type GLFWreallocatefun = fn (block voidptr, size u64, user voidptr)
+pub type GLFWreallocatefun = fn (block voidptr, size u64, user voidptr)
 
-type GLFWdeallocatefun = fn (block voidptr, user voidptr)
+pub type GLFWdeallocatefun = fn (block voidptr, user voidptr)
 
-type GLFWerrorfun = fn (error_code int, const_description &char)
+pub type GLFWerrorfun = fn (error_code int, const_description &char)
 
-type GLFWwindowposfun = fn (window &GLFWwindow, xpos int, ypos int)
+pub type GLFWwindowposfun = fn (window &GLFWwindow, xpos int, ypos int)
 
-type GLFWwindowsizefun = fn (window &GLFWwindow, width int, height int)
+pub type GLFWwindowsizefun = fn (window &GLFWwindow, width int, height int)
 
-type GLFWwindowclosefun = fn (window &GLFWwindow)
+pub type GLFWwindowclosefun = fn (window &GLFWwindow)
 
-type GLFWwindowrefreshfun = fn (window &GLFWwindow)
+pub type GLFWwindowrefreshfun = fn (window &GLFWwindow)
 
-type GLFWwindowfocusfun = fn (window &GLFWwindow, focus int)
+pub type GLFWwindowfocusfun = fn (window &GLFWwindow, focus int)
 
-type GLFWwindowiconifyfun = fn (window &GLFWwindow, iconified int)
+pub type GLFWwindowiconifyfun = fn (window &GLFWwindow, iconified int)
 
-type GLFWwindowmaximizefun = fn (window &GLFWwindow, maximized int)
+pub type GLFWwindowmaximizefun = fn (window &GLFWwindow, maximized int)
 
-type GLFWframebuffersizefun = fn (window &GLFWwindow, width int, height int)
+pub type GLFWframebuffersizefun = fn (window &GLFWwindow, width int, height int)
 
-type GLFWwindowcontentscalefun = fn (window &GLFWwindow, xscale f32, yscale f32)
+pub type GLFWwindowcontentscalefun = fn (window &GLFWwindow, xscale f32, yscale f32)
 
-type GLFWmousebuttonfun = fn (window &GLFWwindow, button int, action int, mods int)
+pub type GLFWmousebuttonfun = fn (window &GLFWwindow, button int, action int, mods int)
 
-type GLFWcursorposfun = fn (window &GLFWwindow, xpos f64, ypos f64)
+pub type GLFWcursorposfun = fn (window &GLFWwindow, xpos f64, ypos f64)
 
-type GLFWcursorenterfun = fn (window &GLFWwindow, entered int)
+pub type GLFWcursorenterfun = fn (window &GLFWwindow, entered int)
 
-type GLFWscrollfun = fn (window &GLFWwindow, xoffset f64, yoffset f64)
+pub type GLFWscrollfun = fn (window &GLFWwindow, xoffset f64, yoffset f64)
 
-type GLFWkeyfun = fn (window &GLFWwindow, key int, scancode int, action int, mods int)
+pub type GLFWkeyfun = fn (window &GLFWwindow, key int, scancode int, action int, mods int)
 
-type GLFWcharfun = fn (window &GLFWwindow, codepoint u32)
+pub type GLFWcharfun = fn (window &GLFWwindow, codepoint u32)
 
-type GLFWcharmodsfun = fn (window &GLFWwindow, codepoint u32, mods int)
+pub type GLFWcharmodsfun = fn (window &GLFWwindow, codepoint u32, mods int)
 
-type GLFWdropfun = fn (window &GLFWwindow, path_count int, const_paths &&char)
+pub type GLFWdropfun = fn (window &GLFWwindow, path_count int, const_paths &&char)
 
-type GLFWmonitorfun = fn (monitor &GLFWmonitor, event int)
+pub type GLFWmonitorfun = fn (monitor &GLFWmonitor, event int)
 
-type GLFWjoystickfun = fn (jid int, event int)
+pub type GLFWjoystickfun = fn (jid int, event int)
 
 @[typedef]
 struct C.GLFWvidmode {
+pub mut:
 	width       int
 	height      int
 	redBits     int
@@ -450,44 +451,48 @@ struct C.GLFWvidmode {
 	refreshRate int
 }
 
-type GLFWvidmode = C.GLFWvidmode
+pub type GLFWvidmode = C.GLFWvidmode
 
 @[typedef]
 struct C.GLFWgammaramp {
+pub mut:
 	red   &u16
 	green &u16
 	blue  &u16
 	size  u32
 }
 
-type GLFWgammaramp = C.GLFWgammaramp
+pub type GLFWgammaramp = C.GLFWgammaramp
 
 @[typedef]
 struct C.GLFWimage {
+pub mut:
 	width  int
 	height int
 	pixels &u8
 }
 
-type GLFWimage = C.GLFWimage
+pub type GLFWimage = C.GLFWimage
 
 @[typedef]
 struct C.GLFWgamepadstate {
+pub mut:
 	buttons [15]u8
 	axes    [6]f32
 }
 
-type GLFWgamepadstate = C.GLFWgamepadstate
+pub type GLFWgamepadstate = C.GLFWgamepadstate
 
 @[typedef]
 struct C.GLFWallocator {
+pub mut:
 	allocate   GLFWallocatefun
 	reallocate GLFWreallocatefun
 	deallocate GLFWdeallocatefun
 	user       voidptr
 }
 
-type GLFWallocator = C.GLFWallocator
+pub type GLFWallocator = C.GLFWallocator
 
 // *************************************************************************
 // * GLFW API functions
@@ -707,7 +712,7 @@ pub fn C.glfwUpdateGamepadMappings(const_string &char) int
 
 pub fn C.glfwGetGamepadName(jid int) &char
 
-pub fn C.glfwGetGamepadState(jid int, state &C.GLFWgamepadstate) int
+pub fn C.glfwGetGamepadState(jid int, state &GLFWgamepadstate) int
 
 pub fn C.glfwSetClipboardString(window &GLFWwindow, const_clipboard &char)
 

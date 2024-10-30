@@ -1,15 +1,17 @@
-module wraper
+module wrapper
+
+import glfw
 
 // Cursor wraps the functionality of GLFWcursor
 pub struct Cursor {
 mut:
-	data &C.GLFWcursor = &C.GLFWcursor(unsafe { 0 })
+	data &glfw.GLFWcursor = &glfw.GLFWcursor(unsafe { 0 })
 }
 
 // create_cursor creates a Cursor instance
 pub fn create_cursor(data voidptr) &Cursor {
 	return &Cursor{
-		data: unsafe { &C.GLFWcursor(data) }
+		data: unsafe { &glfw.GLFWcursor(data) }
 	}
 }
 

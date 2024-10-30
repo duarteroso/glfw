@@ -3,7 +3,7 @@ module wrapper
 // Window wraps the functionality of GLFWwindow
 pub struct Window {
 mut:
-	data &C.GLFWwindow = &C.GLFWwindow(unsafe { 0 })
+	data &glfw.fw.GLFWwindow = &glfw.GLFWwindow(unsafe { 0 })
 }
 
 // WindowDesc describes the basic properties of a window
@@ -14,7 +14,7 @@ pub mut:
 }
 
 // create_window creates a Window from raw data
-pub fn create_window(data &C.GLFWwindow) &Window {
+pub fn create_window(data &glfw.GLFWwindow) &Window {
 	unsafe {
 		return &Window{
 			data: data
@@ -24,12 +24,12 @@ pub fn create_window(data &C.GLFWwindow) &Window {
 
 // create_window_desc creates a window from a description
 pub fn create_window_desc(desc WindowDesc, monitor &Monitor, share &Window) !&Window {
-	mut monitor_data := &C.GLFWmonitor(unsafe { 0 })
+	mut monitor_data := &glfw.GLFWmonitor(unsafe { 0 })
 	// Has monitor data
 	if !isnil(monitor) {
 		monitor_data = monitor.data
 	}
-	mut window_data := &C.GLFWwindow(unsafe { 0 })
+	mut window_data := &glfw.GLFWwindow(unsafe { 0 })
 	// Has shared window
 	if !isnil(share) {
 		window_data = share.data
@@ -46,7 +46,7 @@ pub fn create_window_desc(desc WindowDesc, monitor &Monitor, share &Window) !&Wi
 pub fn (mut w Window) destroy_window() ! {
 	C.glfwDestroyWindow(w.data)
 	check_error()!
-	w.data = &C.GLFWwindow(unsafe { 0 })
+	w.data = &glfw.GLFWwindow(unsafe { 0 })
 }
 
 // should_close returns true if window is closing
@@ -208,7 +208,7 @@ pub fn (w &Window) get_monitor() !&Monitor {
 
 // set_monitor link a Monitor to the window
 pub fn (w &Window) set_monitor(monitor &Monitor, desc MonitorDesc) ! {
-	mut monitor_data := &C.GLFWmonitor(unsafe { 0 })
+	mut monitor_data := &glfw.GLFWmonitor(unsafe { 0 })
 	if !isnil(monitor) {
 		monitor_data = monitor.data
 	}
@@ -245,13 +245,13 @@ pub fn (w &Window) get_user_pointer() !voidptr {
 }
 
 // set_user_pointer links user data to a window
-pub fn set_user_pointer(data &C.GLFWwindow, pointer voidptr) ! {
+pub fn set_user_pointer(data &glfw.fw.GLFWwindow, pointer voidptr) ! {
 	C.glfwSetWindowUserPointer(data, pointer)
 	check_error()!
 }
 
 // get_user_pointer returns the linked user data of a window
-pub fn get_user_pointer(data &C.GLFWwindow) !voidptr {
+pub fn get_user_pointer(data &glfw.GLFWwindow) !voidptr {
 	ptr := C.glfwGetWindowUserPointer(data)
 	check_error()!
 	return ptr
@@ -456,7 +456,7 @@ pub fn get_current_context() !&Window {
 }
 
 // get_window_context_helper get the original C-context instead of the converted V glfw.Window{}
-pub fn get_window_context_helper(window &Window) &C.GLFWwindow {
+pub fn get_window_context_helper(window &Window) &glfw.GLFWwindow {
 	unsafe {
 		return window.data
 	}

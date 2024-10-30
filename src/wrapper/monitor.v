@@ -3,7 +3,7 @@ module wrapper
 // Monitor wraps the functionality of GLFWmonitor
 pub struct Monitor {
 mut:
-	data &C.GLFWmonitor = &C.GLFWmonitor(unsafe { 0 })
+	data &glfw.GLFWmonitor = &glfw.GLFWmonitor(unsafe { 0 })
 }
 
 // MonitorDesc describes the basic properties of a Monitor
@@ -15,7 +15,7 @@ pub mut:
 }
 
 // create_monitor creates a Monitor instance from raw data
-pub fn create_monitor(data &C.GLFWmonitor) &Monitor {
+pub fn create_monitor(data &glfw.GLFWmonitor) &Monitor {
 	unsafe {
 		return &Monitor{
 			data: data
@@ -24,7 +24,7 @@ pub fn create_monitor(data &C.GLFWmonitor) &Monitor {
 }
 
 // set_data links data to a monitor
-pub fn (mut m Monitor) set_data(data &C.GLFWmonitor) {
+pub fn (mut m Monitor) set_data(data &glfw.GLFWmonitor) {
 	unsafe {
 		m.data = data
 	}

@@ -1,12 +1,13 @@
 module wrapper
 
+import glfw
 import semver
 
 // initialize GLFW
 pub fn initialize() !bool {
 	ok := C.glfwInit()
 	check_error()!
-	return ok == glfw_true
+	return ok == glfw.glfw_true
 }
 
 // terminate GLFW
@@ -23,7 +24,7 @@ pub fn init_hint(hint int, value int) ! {
 
 // get_version gets the current GLFW version
 pub fn get_version() semver.Version {
-	major, minor, patch := glfw_dont_care, glfw_dont_care, glfw_dont_care
+	major, minor, patch := glfw.glfw_dont_care, glfw.glfw_dont_care, glfw.glfw_dont_care
 	C.glfwGetVersion(&major, &minor, &patch)
 	v := semver.Version{
 		major: major
@@ -40,7 +41,7 @@ pub fn get_version_string() string {
 }
 
 // set_error_callback sets error callback
-pub fn set_error_callback(cb FnError) FnError {
+pub fn set_error_callback(cb glfw.GLFWerrorfun) glfw.GLFWerrorfun {
 	return C.glfwSetErrorCallback(cb)
 }
 
@@ -72,7 +73,7 @@ pub fn get_primary_monitor() !&Monitor {
 }
 
 // set_monitor_callback sets the monitor changed callback
-pub fn set_monitor_callback(cb FnMonitor) !FnMonitor {
+pub fn set_monitor_callback(cb glfw.GLFWmonitorfun) !glfw.GLFWmonitorfun {
 	prev := C.glfwSetMonitorCallback(cb)
 	check_error()!
 	return prev
@@ -124,7 +125,7 @@ pub fn post_empty_event() ! {
 pub fn is_raw_mouse_motion_supported() !bool {
 	ok := C.glfwRawMouseMotionSupported()
 	check_error()!
-	return ok == glfw_true
+	return ok == glfw.glfw_true
 }
 
 // get_key_name returns a key name
@@ -179,11 +180,11 @@ pub fn swap_interval(interval int) ! {
 pub fn is_extension_supported(extension string) !bool {
 	ok := C.glfwExtensionSupported(extension.str)
 	check_error()!
-	return ok == glfw_true
+	return ok == glfw.glfw_true
 }
 
 // get_proc_address returns the process address
-pub fn get_proc_address(c &char) FnGLProc {
+pub fn get_proc_address(c &char) glfw.GLFWglproc {
 	mut adr := C.glfwGetProcAddress(c)
 	return adr
 }
@@ -192,7 +193,7 @@ pub fn get_proc_address(c &char) FnGLProc {
 pub fn is_vulkan_supported() !bool {
 	ok := C.glfwVulkanSupported()
 	check_error()!
-	return ok == glfw_true
+	return ok == glfw.glfw_true
 }
 
 // get_required_instance_extensions returns the required instance extensions
@@ -210,7 +211,7 @@ pub fn get_required_instance_extensions() ![]string {
 }
 
 // set_joystick_callback sets joystick callback
-pub fn (j &Joystick) set_joystick_callback(cb FnJoystick) !FnJoystick {
+pub fn (j &Joystick) set_joystick_callback(cb glfw.GLFWjoystickfun) !glfw.GLFWjoystickfun {
 	prev := C.glfwSetJoystickCallback(cb)
 	check_error()!
 	return prev
@@ -220,5 +221,5 @@ pub fn (j &Joystick) set_joystick_callback(cb FnJoystick) !FnJoystick {
 pub fn update_gamepad_mapping(mappings string) !bool {
 	ok := C.glfwUpdateGamepadMappings(mappings.str)
 	check_error()!
-	return ok == glfw_true
+	return ok == glfw.glfw_true
 }
