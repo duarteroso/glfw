@@ -1,7 +1,7 @@
 Module {
 	name: 'glfw'
-	version: '3.4.0'
-	description: 'GLFW wrapper in V'
+	description: 'GLFW bindings'
+	version: '2024.10.30'
+	license: 'MIT'
 	dependencies: []
-	license: 'BSD-2-Clause'
 }
